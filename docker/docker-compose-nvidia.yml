@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  ros_docker:
+    extends:
+      file: docker-compose.yml
+      service: ros_docker
+    environment:
+     - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia

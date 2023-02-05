@@ -1,0 +1,99 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    // Source the workspace (attention: dependsOn will uses a new console)
+    {
+      "label": "source",
+      "detail": "Source the current environment variables.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash",
+      "problemMatcher": [],
+      "dependsOn": []
+    },
+    // Install ROS dependencies
+    {
+      "label": "install dependencies",
+      "detail": "Install all dependencies specified in the workspaces package.xml files.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y)",
+      "problemMatcher": [],
+      "dependsOn": []
+    },
+    // Build tasks
+    {
+      "label": "build",
+      "detail": "Build the workspace (default).",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Release' -Wall -Wextra -Wpedantic)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc",
+      "dependsOn": [
+        "install dependencies"
+      ]
+    },
+    {
+      "label": "debug",
+      "detail": "Build the workspace (debug).",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Debug' -Wall -Wextra -Wpedantic)",
+      "group": "build",
+      "problemMatcher": "$gcc",
+      "dependsOn": [
+        "install dependencies"
+      ]
+    },
+    // Test tasks
+    {
+      "label": "test",
+      "detail": "Run all unit tests and show results.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin run_tests)",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "dependsOn": [
+        "install dependencies"
+      ]
+    },
+    // Clean
+    {
+      "label": "clean",
+      "detail": "Run the clean target.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin clean --yes)",
+      "problemMatcher": "$gcc",
+      "dependsOn": []
+    },
+    {
+      "label": "purge",
+      "detail": "Purge workspace by deleting all generated files.",
+      "type": "shell",
+      "command": "(cd ${workspaceFolder} && rm -fr .catkin_tools build install log && py3clean .)",
+      "problemMatcher": []
+    },
+    // Start ROS Master node
+    {
+      "label": "roscore",
+      "detail": "Start the ROS master node.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && roscore)",
+      "problemMatcher": "$gcc",
+      "dependsOn": [
+        "build"
+      ]
+    },
+  ],
+  "inputs": [
+    {
+      "id": "package",
+      "type": "promptString",
+      "description": "Package name"
+    }
+  ]
+}
