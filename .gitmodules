@@ -1,0 +1,15 @@
+[submodule "examples/affordance_templates_ros_indigo/src/affordance_templates"]
+	path = examples/affordance_templates_ros_indigo/src/affordance_templates
+	url = https://bitbucket.org/traclabs/affordance_templates.git
+[submodule "examples/affordance_templates_ros_indigo/src/nasa_r2_common"]
+	path = examples/affordance_templates_ros_indigo/src/nasa_r2_common
+	url = https://bitbucket.org/traclabs/nasa_r2_common.git
+[submodule "examples/affordance_templates_ros_indigo/src/nasa_r2_simulator"]
+	path = examples/affordance_templates_ros_indigo/src/nasa_r2_simulator
+	url = https://bitbucket.org/traclabs/nasa_r2_simulator.git
+[submodule "examples/affordance_templates_ros_indigo/src/robot_interaction_tools"]
+	path = examples/affordance_templates_ros_indigo/src/robot_interaction_tools
+	url = https://bitbucket.org/traclabs/robot_interaction_tools.git
+[submodule "examples/affordance_templates_ros_indigo/src/master"]
+	path = examples/affordance_templates_ros_indigo/src/master
+	url = https://bitbucket.org/nasa_ros_pkg/deprecated_nasa_common/src/master/

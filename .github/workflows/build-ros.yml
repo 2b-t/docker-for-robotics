@@ -1,10 +1,10 @@
-name: Build
+name: ROS Docker
 
 on:
   push:
     paths:
-      - 'docker/Dockerfile'
-      - 'docker/docker-compose.yml'
+      - 'templates/ros/docker/Dockerfile'
+      - 'templates/ros/docker/docker-compose.yml'
   schedule:
     - cron: "0 12 1 * *"
   workflow_dispatch:
