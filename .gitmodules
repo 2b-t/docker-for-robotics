@@ -10,3 +10,9 @@
 [submodule "examples/affordance_templates_ros_indigo/src/robot_interaction_tools"]
 	path = examples/affordance_templates_ros_indigo/src/robot_interaction_tools
 	url = https://bitbucket.org/traclabs/robot_interaction_tools.git
+[submodule "examples/docker-realtime"]
+	path = examples/docker-realtime
+	url = https://github.com/2b-t/docker-realtime
+[submodule "examples/realsense-ros2-docker"]
+	path = examples/realsense-ros2-docker
+	url = https://github.com/2b-t/realsense-ros2-docker
