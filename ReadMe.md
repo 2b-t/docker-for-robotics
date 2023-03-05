@@ -24,7 +24,14 @@ This guide is structured in four chapters:
 - [**Graphic user interfaces and Docker**](./doc/Gui.md): Discusses the challenges of using Docker with graphic user interfaces and presents workarounds.
 - [**ROS and Docker**](./doc/Ros.md): Discusses best-practices of Docker and ROS/ROS 2.
 
-It is further extended by an external guide on **Docker for real-time applications with `PREEMPT_RT`** that can be found [here](https://github.com/2b-t/docker-realtime) as well as an example of such a sensor Docker for the **Intel Realsense sensors** that can be found [here](https://github.com/2b-t/realsense-ros2-docker).
+It is further extended by an external guide on **Docker for real-time applications with `PREEMPT_RT`** that can be found [here](https://github.com/2b-t/docker-realtime) as well as an example of such a Docker for the **Intel Realsense sensors** that can be found [here](https://github.com/2b-t/realsense-ros2-docker).
 
+ 
 
+## Get a copy
 
+This workspace contains several other repositories as submodules. Therefore please clone it with the following command:
+
+```bash
+$ git clone --recurse-submodules https://github.com/2b-t/docker-for-ros.git
+```
