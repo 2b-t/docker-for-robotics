@@ -1,0 +1,20 @@
+name: ROS2 Docker
+
+on:
+  push:
+    paths:
+      - 'templates/ros2/docker/Dockerfile'
+      - 'templates/ros2/docker/docker-compose.yml'
+  schedule:
+    - cron: "0 12 1 * *"
+  workflow_dispatch:
+
+jobs:
+  docker-compose-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build the Dockerfile with Docker-Compose
+        run: docker-compose -f templates/ros2/docker/docker-compose.yml build
+
