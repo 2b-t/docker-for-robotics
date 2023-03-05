@@ -1,0 +1,9 @@
+{
+  "name": "Affordance templates Docker",
+  "dockerComposeFile": [
+    "../docker/docker-compose-gui.yml" // Alternative: "../docker/docker-compose-gui.yml"
+  ],
+  "service": "affordance_templates",
+  "workspaceFolder": "/affordance_templates_ws",
+  "shutdownAction": "stopCompose"
+}

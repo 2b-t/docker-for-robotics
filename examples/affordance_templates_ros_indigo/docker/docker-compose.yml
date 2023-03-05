@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  affordance_templates:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: affordance_templates
+    tty: true
+    volumes:
+      - ../src:/affordance_templates_ws/src
+

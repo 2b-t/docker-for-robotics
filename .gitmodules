@@ -10,6 +10,3 @@
 [submodule "examples/affordance_templates_ros_indigo/src/robot_interaction_tools"]
 	path = examples/affordance_templates_ros_indigo/src/robot_interaction_tools
 	url = https://bitbucket.org/traclabs/robot_interaction_tools.git
-[submodule "examples/affordance_templates_ros_indigo/src/master"]
-	path = examples/affordance_templates_ros_indigo/src/master
-	url = https://bitbucket.org/nasa_ros_pkg/deprecated_nasa_common/src/master/

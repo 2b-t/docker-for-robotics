@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find r2_gazebo)/launch/r2_gazebo.launch"/>
+  <include file="$(find r2_moveit_config)/launch/move_group.launch"/>
+  <node name="affordance_template_server" pkg="affordance_template_server" type="affordance_template_server_node" respawn="true" output="screen"/>
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find at_r2_bringup)/config/at_r2_moveit.rviz"/>
+</launch>

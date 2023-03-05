@@ -1,0 +1,13 @@
+<package>
+  <name>at_r2_bringup</name>
+  <version>0.0.1</version>
+  <description>Configuration and launch files for affordance-templates with the NASA Robonaut2</description>
+  <author>Tobit Flatscher</author>
+  <maintainer email="tobit.flatscher@outlook.com">Tobit Flatscher</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>affordance_template_server</run_depend>
+  <run_depend>r2_gazebo</run_depend>
+  <run_depend>r2_moveit_config</run_depend>
+</package>

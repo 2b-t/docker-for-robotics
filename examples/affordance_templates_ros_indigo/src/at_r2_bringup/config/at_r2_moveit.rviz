@@ -1,0 +1,1541 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 84
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /MotionPlanning1/Scene Robot1
+        - /MotionPlanning1/Planning Request1
+        - /MotionPlanning1/Planning Metrics1
+        - /MotionPlanning1/Planned Path1
+        - /Asus Camera1/Visibility1
+      Splitter Ratio: 0.467146
+    Tree Height: 143
+  - Class: rviz/Help
+    Name: Help
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: RVizInteractiveControlsPanel/RVizInteractiveControlsPanel
+    Name: RVizInteractiveControlsPanel
+  - Class: rviz_affordance_template_panel/RVizAffordanceTemplatePanel
+    Name: RVizAffordanceTemplatePanel
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: moveit_rviz_plugin/MotionPlanning
+      Enabled: true
+      Move Group Namespace: ""
+      MoveIt_Goal_Tolerance: 4
+      MoveIt_Planning_Attempts: 10
+      MoveIt_Planning_Time: 5
+      MoveIt_Use_Constraint_Aware_IK: true
+      MoveIt_Warehouse_Host: 127.0.0.1
+      MoveIt_Warehouse_Port: 33829
+      MoveIt_Workspace:
+        Center:
+          X: 0
+          Y: 0
+          Z: 0
+        Size:
+          X: 2
+          Y: 2
+          Z: 2
+      Name: MotionPlanning
+      Planned Path:
+        Color Enabled: false
+        Interrupt Display: false
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          r2/asus_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/backpack:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/baseplate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/body_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/chest_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/chest_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_elbow:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_index_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_index_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_little_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_lower_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_middle_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_middle_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_shoulder_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_shoulder_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_thumb_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_medial_prime:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_upper_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_wrist_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_wrist_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/neck_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_lower_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_upper_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/openni_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_elbow:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_index_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_index_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_little_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_lower_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_middle_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_middle_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_shoulder_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_shoulder_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_thumb_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_medial_prime:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_upper_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_wrist_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_wrist_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_reference:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/simulated_asus_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/simulated_asus_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/stanchion:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/vision_center_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/waist_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+        Loop Animation: false
+        Robot Alpha: 0.25
+        Robot Color: 150; 50; 150
+        Show Robot Collision: false
+        Show Robot Visual: true
+        Show Trail: false
+        State Display Time: 0.05 s
+        Trail Step Size: 1
+        Trajectory Topic: /move_group/display_planned_path
+      Planning Metrics:
+        Payload: 1
+        Show Joint Torques: false
+        Show Manipulability: false
+        Show Manipulability Index: false
+        Show Weight Limit: false
+        TextHeight: 0.08
+      Planning Request:
+        Colliding Link Color: 255; 0; 0
+        Goal State Alpha: 1
+        Goal State Color: 250; 128; 0
+        Interactive Marker Size: 0.25
+        Joint Violation Color: 255; 0; 255
+        Planning Group: head
+        Query Goal State: true
+        Query Start State: false
+        Show Workspace: false
+        Start State Alpha: 1
+        Start State Color: 0; 255; 0
+      Planning Scene Topic: /move_group/monitored_planning_scene
+      Robot Description: robot_description
+      Scene Geometry:
+        Scene Alpha: 1
+        Scene Color: 50; 230; 50
+        Scene Display Time: 0.2
+        Show Scene Geometry: true
+        Voxel Coloring: Z-Axis
+        Voxel Rendering: Occupied Voxels
+      Scene Robot:
+        Attached Body Color: 150; 50; 150
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          r2/asus_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/backpack:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/baseplate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/body_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/chest_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/chest_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_elbow:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_index_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_index_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_index_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_little_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_little_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_lower_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_middle_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_middle_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_middle_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_ring_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_shoulder_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_shoulder_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_thumb_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_medial_prime:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_thumb_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_upper_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/left_wrist_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/left_wrist_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/neck_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_lower_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/neck_upper_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/openni_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_elbow:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_index_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_index_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_index_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_little_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_little_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_lower_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_middle_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_middle_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_middle_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_ring_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_shoulder_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_shoulder_roll:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_thumb_distal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_medial:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_medial_prime:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_proximal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_thumb_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_upper_arm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/right_wrist_pitch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/right_wrist_yaw:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_reference:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/robot_world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/simulated_asus_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/simulated_asus_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/stanchion:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r2/vision_center_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          r2/waist_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+        Robot Alpha: 0.5
+        Show Robot Collision: false
+        Show Robot Visual: true
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        r2/asus_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/backpack:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/baseplate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/body_cover:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/chest_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/chest_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_camera_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_elbow:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_index_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_index_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_index_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_index_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_index_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_index_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_little_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_little_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_little_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_little_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_lower_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_middle_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_middle_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_middle_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_middle_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_middle_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_middle_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_palm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_ring_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_ring_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_ring_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_ring_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_shoulder_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_shoulder_roll:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_thumb_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_thumb_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_thumb_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_thumb_medial_prime:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_thumb_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_thumb_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_upper_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/left_wrist_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/left_wrist_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/neck_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/neck_lower_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/neck_roll:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/neck_upper_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/openni_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_camera_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_elbow:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_index_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_index_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_index_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_index_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_index_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_index_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_little_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_little_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_little_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_little_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_lower_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_middle_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_middle_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_middle_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_middle_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_middle_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_middle_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_palm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_ring_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_ring_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_ring_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_ring_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_shoulder_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_shoulder_roll:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_thumb_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_thumb_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_thumb_medial:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_thumb_medial_prime:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_thumb_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_thumb_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_upper_arm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/right_wrist_pitch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/right_wrist_yaw:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/robot_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/robot_reference:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/robot_world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/simulated_asus_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/simulated_asus_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/stanchion:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r2/vision_center_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        r2/waist_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz/InteractiveMarkers
+      Enable Transparency: true
+      Enabled: true
+      Name: Teleop Markers
+      Show Axes: false
+      Show Descriptions: true
+      Show Visual Aids: false
+      Update Topic: /r2_teleop/update
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /r2/move_group/planned_path_visualization
+      Name: Path Visualization
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Camera
+      Enabled: false
+      Image Rendering: background and overlay
+      Image Topic: /r2/asus/rgb/image_raw
+      Name: Asus Camera
+      Overlay Alpha: 0.5
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+      Visibility:
+        "": true
+        Asus: true
+        Grid: false
+        MotionPlanning: true
+        OccupancyGrid: true
+        Path Visualization: true
+        RobotModel: false
+        Teleop Markers: true
+        Value: true
+      Zoom Factor: 1
+    - Class: octomap_rviz_plugin/OccupancyGrid
+      Enabled: false
+      Max. Octree Depth: 16
+      Name: OccupancyGrid
+      Octomap Topic: /octomap_full
+      Queue Size: 5
+      Value: false
+      Voxel Coloring: Z-Axis
+      Voxel Rendering: Occupied Voxels
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Asus
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.01
+      Style: Points
+      Topic: /r2/asus/depth/points
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/InteractiveMarkers
+      Enable Transparency: true
+      Enabled: true
+      Name: InteractiveMarkers
+      Show Axes: false
+      Show Descriptions: true
+      Show Visual Aids: false
+      Update Topic: /affordance_template_interactive_marker_server/update
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 0; 0; 0
+    Fixed Frame: world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+  Value: true
+  Views:
+    Current:
+      Class: rviz/XYOrbit
+      Distance: 3.38274
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.140022
+        Y: -0.3995
+        Z: 2.19047e-06
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.394796
+      Target Frame: world
+      Value: XYOrbit (rviz)
+      Yaw: 6.00102
+    Saved: ~
+Window Geometry:
+  Asus Camera:
+    collapsed: false
+  Displays:
+    collapsed: false
+  Height: 1016
+  Help:
+    collapsed: false
+  Hide Left Dock: false
+  Hide Right Dock: false
+  MotionPlanning:
+    collapsed: false
+  MotionPlanning - Slider:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd000000020000000000000258000003a8fc0200000007fb000000100044006900730070006c006100790073010000003600000120000000b700fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000015c000002820000019800fffffffb0000000a0049006d00610067006500000002b7000001c00000000000000000fb0000000a0056006900650077007300000003b0000000b00000009b00fffffffb000000160041007300750073002000430061006d00650072006102000000a40000008f000003f900000302fc00000461000000160000000000fffffffa000000000100000002fb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006700000000000000026f0000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000004100ffffff0000000100000193000003a8fc0200000002fc00000036000003a80000030a00fffffffa000000000100000002fb00000036005200560069007a004100660066006f007200640061006e0063006500540065006d0070006c00610074006500500061006e0065006c0100000000ffffffff0000019300fffffffb0000000800480065006c007000000006fe000002b80000004f00fffffffb00000038005200560069007a0049006e0074006500720061006300740069007600650043006f006e00740072006f006c007300500061006e0065006c0000000036000002400000024000ffffff000005bf000003a800000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  RVizAffordanceTemplatePanel:
+    collapsed: false
+  RVizInteractiveControlsPanel:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 2486
+  X: 73
+  Y: 26
