@@ -1,0 +1,7 @@
+<CycloneDDS>
+   <Domain>
+     <General>
+        <NetworkInterfaceAddress>${ROS2_NETWORK_INTERFACE}</NetworkInterfaceAddress>
+    </General>
+   </Domain>
+</CycloneDDS>

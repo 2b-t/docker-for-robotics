@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  ros2_docker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: ros2_docker
+    environment:
+      - ROS_DOMAIN_ID=0
+      - ROS2_NETWORK_INTERFACE=${YOUR_NETWORK_INTERFACE}
+      - CYCLONEDDS_URI=/ros2_ws/dds/cyclone.xml
+    extra_hosts:
+      - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
+    network_mode: "host"
+    tty: true
+    volumes:
+      - ../src:/ros2_ws/src
+      - ../dds:/ros2_ws/dds
+
