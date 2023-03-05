@@ -2,7 +2,7 @@
 
 Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - February 2023)
 
-[![ROS Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml/badge.svg)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![ROS Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml/badge.svg)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml) [![ROS2 Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml/badge.svg)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
