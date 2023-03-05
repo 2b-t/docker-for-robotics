@@ -16,5 +16,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build the Dockerfile with Docker-Compose
-        run: docker-compose -f docker/docker-compose.yml build
+        run: docker-compose -f templates/ros/docker/docker-compose.yml build
 
