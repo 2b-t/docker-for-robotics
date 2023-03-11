@@ -124,6 +124,37 @@ In order to update the IPs though with this approach you will have to rebuild th
 
 Combining different ROS 1 versions is not officially supported but largely works as long as message definitions have not changed. This is problematic with constantly evolving packages such as [Moveit](https://moveit.ros.org/). The interface between the containers in this case has to be chosen wisely such that the used messages do not change across between the involved distributions. You can use [`rosmsg md5 <message_type>`](https://wiki.ros.org/rosmsg#rosmsg_md5) in order to verify quickly if the message definitions have changed: If the two `md5` hashes are the same then the two distributions should be able to communicate via this message.
 
+### 2.3 Healthcheck
+
+Docker gives you the possibility to [add a custom healthcheck to your container](https://docs.docker.com/engine/reference/builder/#healthcheck). This test should tell Docker whether your container is working correctly or not. Such a healthcheck can be defined from inside the Dockerfile or from a Docker-Compose file.
+
+In a Dockerfile it might look as follows:
+
+```dockerfile
+HEALTHCHECK [OPTIONS] CMD command
+```
+
+such as
+
+```dockerfile
+HEALTHCHECK CMD /ros_entrypoint.sh rostopic list || exit 1
+```
+
+or anything similar.
+
+While for [Docker-Compose](https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck) you might add something like:
+
+```yaml
+healthcheck:
+  test: /ros_entrypoint.sh rostopic list || exit 1
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 1m
+```
+
+
+
 ## 3. ROS 2
 
 ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UDP](https://wiki.ros.org/ROS/UDPROS) communication with [DDS](https://design.ros2.org/articles/ros_on_dds.html). As a result the [`ROS_DOMAIN_ID`](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html) replaces the IP-based set-up. For a container this means one would create a `ROS_DOMAIN_ID` environment variable that again might be controlled by an [`.env` file](https://vsupalov.com/docker-arg-env-variable-guide/):
