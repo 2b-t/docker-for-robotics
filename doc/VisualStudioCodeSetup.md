@@ -47,7 +47,9 @@ The `.devcontainer` file let's Visual Studio Code know if it is dealing with [Do
 
 The contents of `.vscode` depend on the programming language and the additional plug-ins you want to use, e.g. for Linting/static code analysis. One can configure for example tasks that can be executed with key shortcuts.
 
-In my case I have configured the following tasks inside my `tasks.json`:
+#### 1.2.1 ROS
+
+In my case I have configured the following tasks inside my `tasks.json` for ROS:
 
 ```json
 {
@@ -148,6 +150,87 @@ In my case I have configured the following tasks inside my `tasks.json`:
       "description": "Package name"
     }
   ]
+}
+```
+
+#### 1.2.2 ROS 2
+
+On the other hand for ROS 2 I use:
+
+```json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        // Source the workspace (not working as dependsOn will use a new console)
+        {
+            "label": "source",
+            "detail": "Source the current environment variables.",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.vscode/ros2_source.bash",
+            "problemMatcher": [],
+            "dependsOn": []
+        }, 
+        // Install ROS dependencies
+        {
+            "label": "install dependencies",
+            "detail": "Install all dependencies specified in the workspaces package.xml files.",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.vscode/ros2_source.bash && (cd ${workspaceFolder} && apt-get update -y && rosdep update && rosdep install --from-paths src --ignore-src -y)",
+            "problemMatcher": [],
+            "dependsOn": []
+        }, 
+        // Build tasks
+        {
+            "label": "build",
+            "detail": "Build the workspace (default).",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.vscode/ros2_source.bash && (cd ${workspaceFolder} && colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Release' -Wall -Wextra -Wpedantic)",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc",
+            "dependsOn": ["install dependencies"]
+        },
+        {
+            "label": "debug",
+            "detail": "Build the workspace (debug).",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.vscode/ros2_source.bash && (cd ${workspaceFolder} && colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Debug' -Wall -Wextra -Wpedantic)",
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": ["install dependencies"]
+        },
+        // Test tasks
+        {
+            "label": "test",
+            "detail": "Run all unit tests and show results.",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.vscode/ros2_source.bash && (cd ${workspaceFolder} && colcon run_tests)",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "dependsOn": ["install dependencies"]
+        },
+        // Clean
+        {
+            "label": "purge",
+            "detail": "Purge workspace by deleting all generated files.",
+            "type": "shell",
+            "command": "(cd ${workspaceFolder} && rm -fr build install log && py3clean .)",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+          "id": "package",
+          "type": "promptString",
+          "description": "Package name"
+        }
+    ]
 }
 ```
 
