@@ -1,40 +1,36 @@
 # Introduction to Docker
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - September 2022)
+Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - March 2023)
 
 
 
 ## 1. Challenges in software deployment
 
-Deploying a piece of software in a portable manner is not trivial. Clearly there are different operating system and different software architectures which require different binary code, but even if these match you have to make sure that the compiled code can be executed on another machine by supplying all its **dependencies**.
+Deploying a piece of software in a portable manner is a non-trivial task. Clearly there are different operating system and different software architectures which require different binary code, but even if these match you have to make sure that the compiled code can be executed on another machine by supplying all its **dependencies**.
 
-Linux is traditionally organised in repositories which contain the application as well as all the dependencies to run them. Over the years several different packaging systems have emerged such as [`snap`](https://snapcraft.io/) and [`apt`](https://wiki.debian.org/Apt). A `snap` package uses self-contained packages which pack all the dependencies that a program requires to run, rendering it system-agnostic. `apt` on the other hand is only available on Debian-based systems such as Ubuntu and handles retrieving, configuring, installing as well as removing packages in an automated manner. When installing an  `apt` package it checks the existing dependencies and installs only those that are not available yet on the system. This means the dependencies are shared, making the packages smaller but not allowing for multiple installations of the same library and potentially causing issues between applications requiring different versions of the same library. `snap` on the other hand is self-contained, it works in its own box, and allows for multiple installations of the same library.  **Self-contained** boxes like these are called **containers**, as they do not pollute the rest of the system.
+Over the years several different packaging systems for different operating systems have emerged that provide methods for installing new dependencies and managing existing ones in an coherent manner. The low-level package manager for Debian-based Linux operating systes is [`dpkg`](https://wiki.debian.org/Teams/Dpkg), while for high-level package management, fetching packages from remote locations and resolving complex package relations, generally [`apt`](https://wiki.debian.org/Apt) is chosen. `apt` handles retrieving, configuring, installing as well as removing packages in an automated manner. When installing an  `apt` package it checks the existing dependencies and installs only those that are not available yet on the system. The dependencies are shared, making the packages smaller but not allowing for multiple installations of the same library and potentially causing issues between applications requiring different versions of the same library. Contrary to this the popular package manager [`snap`](https://snapcraft.io/) uses self-contained packages which pack all the dependencies that a program requires to run, allowing for multiple installations of the same library.  **Self-contained** boxes like these are called **containers**, as they do not pollute the rest of the system and might only have limited access to the host system. The main advantage of containers is that they provide clean and conistent environments as well as isolation from the hardware.
 
 
 
 ## 2. Docker to the rescue
 
-[**Docker**](https://www.docker.com/) is another **framework** for working with **containers**. A [Docker - contrary to `snap`](https://www.youtube.com/watch?v=0z3yusiCOCk) - is not integrated in terms of hardware and networking but instead has its own IP address, it adds an extra layer of abstraction. The resulting (partially intended) complications with networking and graphical user interfaces can be worked around though. In some way a Docker container is similar to a virtual machine but the containers share the same kernel like the host system: Docker does not **virtualise** on a hardware level but on an **app level** (OS-level virtualisation). As such Docker has its own namespaces for `mnt`, `pid`, `net`, `ipc` as well as `usr`. It has therefore also its own users which might be different from outside and its own network configuration.
+[**Docker**](https://www.docker.com/) is another **framework** for working with **containers**. A [Docker - contrary to `snap`](https://www.youtube.com/watch?v=0z3yusiCOCk) - is not integrated in terms of hardware and networking but instead has its own IP address, adding an extra layer of abstraction. A Docker container is similar to a virtual machine but the containers share the same kernel like the host system: Docker does not **virtualise** on a hardware level but on an **app level** (OS-level virtualisation). For this Docker builds on a virtualization feature of the Linux kernel, [namespaces](https://en.wikipedia.org/wiki/Linux_namespaces), that allows to selectivelty grant processes access to kernel resources. As such Docker has its own namespaces for `mnt`, `pid`, `net`, `ipc` as well as `usr` and its own root file system. As a Docker container uses the same kernel, and as a result also the same scheduler one might achieve native performance. At the same time this results in issues with graphic user interfaces as these are not part of the kernel itself and thus not shared between the container and the host system. These problems can be worked around though mostly.
 
-This results in a couple of advantages:
+Using Docker brings a couple of advantages as it strongly leverages on the decoupling of the kernel and the rest of the operating system:
 
-- **Portability**: You can run code not intended for your particular Linux distribution (e.g packages for Ubuntu 20.04 on Ubuntu 18.04 and vice versa) and you can mix them, launching several containers with different requirements on the same host system by means of dedicated [orchestration tools](https://docs.docker.com/get-started/orchestration/) such as [Kubernetes](https://kubernetes.io/) or [Docker Swarm](https://docs.docker.com/engine/swarm/). This is a huge advantage for robotics applications as one can mix containers with different ROS distributions on the same computer running in parallel.
+- **Portability**: You can run code not intended for your particular Linux distribution (e.g packages for Ubuntu 20.04 on Ubuntu 18.04 and vice versa) and you can mix them, launching several containers with different requirements on the same host system by means of dedicated [orchestration tools](https://docs.docker.com/get-started/orchestration/) such as [Kubernetes](https://kubernetes.io/) or [Docker Swarm](https://docs.docker.com/engine/swarm/). This is a huge advantage for robotics applications as one can mix containers with different ROS distributions on the same computer running in parallel, all running on the same kernel of the host operating system, governed by the same scheduler.
 - **Performance**: Contrary to a virtual machine the performance penalty is very small and for most applications is indistinguishable from running code on the host system: After all it uses same kernel and scheduler as the host system.
 - Furthermore one can also run a **Linux container on a Windows or MacOS operating system**. This way you lose though a couple of advantages of Docker such as being able to run real-time code as there will be a light-weight virtual machine underneath emulating a Linux kernel.
 
-The most interesting feature of Docker is that its environment is described by a standardised self-contained file, the so called `Dockerfile` which allows you to construct it environment on the fly, store its state and destroy it again. This way one can guarantee a **clean, consistent and standardised build environment**. This file might help also somebody reconstruct the steps required to get a code up and running on a vanilla host system without the Docker. It is so to speak self-documenting and does not result in an additional burden like a wiki.
+This way one can guarantee a **clean, consistent and standardised build environment** while maintaining encapsulation and achieving native performance.
 
-This makes Docker in particular suitable for **deploying source code in a replicable manner** and will likely speed-up your development workflow. Furthermore one can use the description to perform tests or compile the code on a remote machine in terms of [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration). This means for most people working professional on code development it comes at virtually no cost.
+The core component of Docker are so called **images**, *immutable read-only templates*, that hold source code, libraries and dependencies. These can be layered over each other to form more complex images. **Containers** on the other hand are the *writable layer* on top of the read-only images. By starting an image you obtain a container: Images and containers are not opposing objects but they should rather be seen as different phases of building a containerised application.
 
-Docker consists of three main **components**:
-
-- The Docker **daemon** software manages the different containers that are available on the system
-- Objects that an application can be constructed from, namely
-  - *Immutable read-only templates*, so called **images**, that hold source code, libraries and dependencies. These can be layered over each other to form more complex images, improving efficiency.
-  - **Containers** are the *writable layer* on top of the read-only images. By starting an image you obtain a container: Images and containers are not opposing objects but they should rather be seen as different phases of building a containerised application.
-- **Docker registries** (such as the [Docker Hub](https://hub.docker.com/) or [Github's GHCR](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)): Repositories for Docker images. These hold different images so that one does not have to go through the build process but instead can upload and download them directly, speeding up deployment. This upload might also be triggered by a continuous integration workflow like outlined [here](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images).
+The Docker **daemon** software manages the different containers that are available on the system: The generation of an image can be described by a so called **`Dockerfile`**. A Dockerfile is like a recipe describing how an image can be created from scratch. This file might help also somebody reconstruct the steps required to get a code up and running on a vanilla host system without Docker. It is so to speak self-documenting and does not result in an additional burden like a wiki. Similarly one can recover the steps performed to generate an image with [`$ docker history --no-trunc <image_id>`](https://docs.docker.com/engine/reference/commandline/history/). Dedicated servers, so calle **Docker registries** (such as the [Docker Hub](https://hub.docker.com/) or [Github's GHCR](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)), allow you to store and distribute your Docker images. These image repositories hold different images so that one does not have to go through the build process but instead can upload and download them directly, speeding up deployment. Uploads might also be triggered by a continuous integration workflow like outlined [here](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images).
 
 On top of this there go other toolchains for managing the lifetime of containers and orchestration multiple of them such as [Docker-Compose](https://docs.docker.com/compose/), [Swarm](https://docs.docker.com/engine/swarm/) or [Kubernetes](https://kubernetes.io/).
+
+This makes Docker in particular suitable for **deploying source code in a replicable manner** and will likely speed-up your development workflow. Furthermore one can use the description to perform tests or compile the code on a remote machine in terms of [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration). This means for most people working professional on code development it comes at virtually no cost.
 
 
 
@@ -74,7 +70,7 @@ If you want to find out what other images you could start from just [browse the 
 $ docker run ubuntu:focal
 ```
 
-This should not output anything and should immediately return. The reason for this is that each container has an [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint). This script will be run and as soon as it terminates the container will return to the command line. This is actually the basic idea of a Docker container: A container should be responsible for a single service.
+This should not output anything and should immediately return. The reason for this is that each container has an [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint). This script will be run and as soon as it terminates the container will return to the command line. This is actually the basic idea of a Docker container: A container should be responsible for a single service. Once this service stops it should return again.
 
 If you want to keep the container open you have to open it in **interactive** mode by specifying the flag `-i` and the `-t` for opening a terminal
 
@@ -100,22 +96,24 @@ With the `$ exit` command the Docker can be shut down.
 
 ### 4.2 Setting-up a `Dockerfile`
 
-Now that we have seen how to start a container from an existing image let us build a `Dockerfile` that defines steps that should be executed on the image.
+Now that we have seen how to start a container from an existing image let us build a `Dockerfile` that defines steps that should be executed on the image:
 
 ```dockerfile
 # Base image
 FROM ubuntu:focal
 
-# Define workspace folder (e.g. where to place your code)
-WORKDIR /code
+# Define the workspace folder (e.g. where to place your code)
+# We define a variable so that we can re-use it
+ENV WS_DIR="/code"
+WORKDIR ${WS_DIR}
 
 # Copy your code into the folder (see later for better alternatives!)
 COPY . WORKDIR
 
-# Use bash as default shell
+# Use Bourne Again Shell as default shell
 SHELL ["/bin/bash", "-c"] 
 
-# Disable user dialogs in installation messages
+# Disable user dialogs in apt installation messages
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Commands to perform on base image
@@ -130,35 +128,128 @@ RUN apt-get -y update \
  && make install \
  && rm -rf /var/lib/apt/lists/*
 
-# Enable user dialogs again
+# Enable apt user dialogs again
 ARG DEBIAN_FRONTEND=dialog
+
+# Define the script that should be launched upon start of the container
+ENTRYPOINT ["/code/src/my_script.sh"]
 ```
 
-When saving this as `Dockerfile` (without a file ending), you can launch it with
+When saving this as `Dockerfile` (without a file ending) and type:
 
 ```bash
-$ docker run -it --name ubuntu_test
+$ docker build -f Dockerfile .
 ```
 
-As soon as you starting building complex containers you will see that the compilation might be quite slow as a lot of data might have be to installed. If you want to execute it again though or you add a command to the `Dockerfile` the container will start pretty quickly. Docker itself caches the compiled images and re-uses them if possible. In fact each individual `RUN` command forms a layer of its own that might be re-used. It is therefore crucial to avoid conflicts between different layers, e.g. by [introducing each `apt-get -y install` with an `apt-get update`](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run). They have to be combined in the same `RUN` command though to be effective. Similarly you can benefit from this caching (multi-stage build process) by [ordering the different layers from less frequent to most frequently changed](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#use-multi-stage-builds). This way you might reduce the time you spend re-compiling significantly.
+Then read the available images with 
+
+```
+$ docker image ls
+  REPOSITORY   TAG      IMAGE ID     CREATED   SIZE
+  <none>       latest   <image_id>   ...       ...
+```
+
+You should see your newly created image.
+
+You can launch it with
+
+```bash
+$ docker run -it <image_id>
+```
+
+As soon as you starting building complex containers you will see that the compilation might be quite slow as a lot of data might have be to installed. If you want to execute it again though or you add a command to the `Dockerfile` the container will start pretty quickly. Docker itself caches the compiled images and re-uses them if possible. In fact each individual `RUN` etc. command forms a layer of its own that might be re-used. It is therefore crucial to avoid conflicts between different layers, e.g. by [introducing each `apt-get -y install` with an `apt-get update`](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run). They have to be combined in the same `RUN` command though to be effective. Similarly you can benefit from this caching by [ordering the different layers from less frequent to most frequently changed](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#use-multi-stage-builds). This way you might reduce the time you spend re-compiling significantly.
+
+At the same time it is also important to make the images as slim as possible removing all undesired artifacts from the images that are not necessary. For `apt` this means deleting the `apt` list after each layer again
+
+```bash
+rm -rf /var/lib/apt/lists/*
+```
+
+A simple solution to this are [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) where multiple `FROM` statements are used within the same Dockerfile and parts are selectively copied between the different stages. This way everything that is not needed can be left behind.
+
+Additionally one should set the `DEBIAN_FRONTEND` environment variable to `noninteractive` before installing any packages with `apt`. Else building the Dockerfile might fail!
 
 ### 4.3 Managing data
 
 As you have seen above we copied the data of the current directory into the container with the `COPY` command. This means though that our changes will not affect the local code, instead we are working on a copy of it. This is often not desirable. Most f the time you actually want to mount your folders and shared them between the host system and the container. 
 
-There are several approaches for [managing data](https://docs.docker.com/storage/) with a Docker container. Generally one stores the relevant code outside the Docker on the host system, mounting files and directories into the container, while leaving any built files inside it. This way the files relevant to both systems can be accessed inside and outside the Docker. This is generally done with [volumes](https://docs.docker.com/storage/volumes/). This results in [additional flags](https://docs.docker.com/storage/volumes/) that have to be supplied when running the Docker.
+There are several approaches for [managing data](https://docs.docker.com/storage/) with a Docker container. Generally one stores the relevant code outside the Docker on the host system, mounting files and directories into the container, while leaving any built files inside it. This way the files relevant to both systems can be accessed inside and outside the Docker. This is generally done with [volumes](https://docs.docker.com/storage/volumes/). This results in [additional flags](https://docs.docker.com/storage/volumes/) that have to be supplied when running the Docker:
+
+```bash
+$ docker run -it <image_id> --volume:<from_host_directory>:<to_container_directory>
+```
 
 ### 4.4 Build and run scripts
 
-As you can imagine when specifying start-up options like `-it`, mounting volumes, setting up the network configuration, display settings for graphic user interfaces, passing a user name to be used inside the Docker etc. the commands for building and running Docker containers can get pretty lengthy and complicated.
+As you can imagine when specifying start-up options like `-it`, mounting volumes, setting up the network configuration, display settings for graphic user interfaces, passing a user name to be used inside the Docker etc. the commands for building and running Docker containers can get pretty lengthy and complicated such as the one below:
 
-To simplify this process people often create bash scripts that store these arguments for them. Instead of typing a long command they just call scripts like `build_image.bash` and `container_start.bash`. This can though be quite unintuitive for other users as there does not exist a common convention for doing so. Therefore tools like Docker-Compose, which is discussed in the next section, try to simplify this process by providing standardized configuration files for it.
+```bash
+$ docker run -it --volume=../src:/code/src --name=my_container --env=DISPLAY \
+  --env=QT_X11_NO_MITSHM=1 --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw \
+  --volume=/tmp/.docker.xauth:/tmp/.docker.xauth:rw --entrypoint='/bin/bash' <image_id>
+```
+
+To simplify this process people often create bash scripts that store these arguments for them. Instead of typing a long command commonly one just call scripts like `build_image.bash` and `container_start.bash`. This can though be quite unintuitive for other users as there does not exist a common convention for doing so. Therefore tools like Docker-Compose, which is discussed in the next section, try to simplify this process by providing standardized configuration files for it.
+
+In any case try to avoid the `privileged` flag. If you run into any issue with not being able to do something, running the container as `privileged` will almost always solve it but there will be a more clean way. The `privileged` option breaks encapsulation and as such might pose a security risk.
+
+At the same time it makes sense to pass crucial information into the container by means of environment variables.
+
+### 4.5 Using a Docker registry: Dockerhub
+
+Instead of creating our Docker image from a Docker file we might want to use a more complex existing one from a Docker registry. For this we will use the official one in the following example, the [Dockerhub](https://hub.docker.com/).
+
+Let's begin by logging in and pulling an existing image from an existing repository that you might have found [browsing the Dockerhub](https://hub.docker.com/search).
+
+```bash
+$ docker login --username=<user> --email=<e@mail.com> # If it is public we can pull also without logging in
+$ docker pull <repo>:<tag> # Pull an image from the server
+```
+
+This should give as a new image on our local computer that we can run
+
+```bash
+$ docker images # List all locally available images
+  REPOSITORY   TAG      IMAGE ID       CREATED   SIZE
+  <repo>       <tag>    <image_id>     ...       ...
+$ docker run -it <image_id>:<tag> bin/bash # Run the image as a container
+  <user>@<container_id>:/#
+```
+
+Now we can make changes to the container and finally exit it with `exit`. We should be able to see it with the following command:
+
+```bash
+$ docker ps -a # Show all containers
+  CONTAINER ID     IMAGE             COMMAND   CREATED   STATUS   PORTS  NAMES
+  <container_id>   <image_id>:<tag>  ...       ...       ...      ...    ...
+```
+
+Finally we can commit our changes to a new image and push this image to the Dockerhub as follows:
+
+```bash
+$ docker commit <container_id> <image_name>:<tag> # Commit container to new image
+$ docker images # List all available images
+  REPOSITORY     TAG      IMAGE ID       CREATED   SIZE
+  <image_name>   <tag>    <image_id>     ...       ...
+  <repo>         ...      ...            ...       ...
+$ docker tag <image_id> <user>/<repo>:<tag> # Tag the image
+$ docker push <user>/<repo> # Push the image to the server
+```
+
+### 4.6 Exporting a Docker image to file
+
+Accessing most Docker registries will require internet access. Therefore when dealing with a slow network connection or an offline computer, sometimes it might be convenient to save a Docker image to the disk, copy them to the machine without internet access and load them onto that system:
+
+```bash
+$ docker save <repo>:<tag> > <file.tar> # Save Docker to file
+$ docker load --input <file.tar> # Load Docker on other computer without internet access
+```
 
 
 
 ## 5. Docker-Compose
 
-There are different tools available that simplify the management and the orchestration of these Docker containers, such as [Docker-Compose](https://docs.docker.com/compose/reference/up/). As said supplying arguments to Docker for building and running a `Dockerfile` often results in lengthy `shell` scripts. One way of decreasing complexity and [tidying up the process](https://docs.docker.com/compose/) is by using [**Docker Compose**](https://docs.docker.com/compose/). It is a tool that can be used for defining and running multi-container Docker applications but is also very useful for a single container. In a Yaml file such as **`docker-compose.yml`** one describes the services that an app consists of (see [here](https://github.com/compose-spec/compose-spec/blob/master/spec.md) for the syntax) and which options it should be started with. There are though a few corner cases where Docker-Compose is not powerful enough. For example it can't execute commands on the host system in order to obtain parameters that are then passed to the Docker. Parameters have to be supplied in the form of text.
+There are different tools available that simplify the management and the orchestration of these Docker containers, such as [Docker-Compose](https://docs.docker.com/compose/reference/up/). As said supplying arguments to Docker for building and running a `Dockerfile` often results in lengthy `shell` scripts. One way of decreasing complexity and [tidying up the process](https://docs.docker.com/compose/) is by using [**Docker-Compose**](https://docs.docker.com/compose/). It is a tool that can be used for defining and running multi-container Docker applications but is also very useful for a single container. In a Yaml file such as **`docker-compose.yml`** one describes the services that an app consists of (see [here](https://github.com/compose-spec/compose-spec/blob/master/spec.md) for the syntax) and which options it should be started with. There are though a few corner cases where Docker-Compose is not powerful enough. For example it can't execute commands on the host system in order to obtain parameters that are then passed to the Docker. Parameters have to be supplied in the form of text or in the form of an environment file.
 
 ### 5.1 Installation
 
@@ -172,7 +263,37 @@ or `$ docker-compose --version`.
 
 ### 5.2 Writing and launching a Docker-Compose file
 
-A Docker-Compose file is written in form of an hierarchical `yml` file, generally named `docker-compose.yml`. Such a file might look like this:
+For example the rather complicated Docker run command given before could be expressed in Docker-Compose with the hierarchical `yml` file, generally named `docker-compose.yml`:
+
+```yaml
+version: "3.9"
+services:
+  my_service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: my_container
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ../src:/code/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+    command: '/bin/bash'
+```
+
+After having created both a `Dockerfile` as well as a `docker-compose.yml` you can launch them with:
+
+```bash
+$ docker compose -f docker-compose.yml build
+$ docker compose -f docker-compose.yml up
+```
+
+where with the option `-f` a Docker-Compose file with a different filename can be provided. If not given it will default to `docker-compose.yml`.
+
+More generally such a file might hold multiple services:
 
 ```yaml
 version: "3.9"
@@ -195,23 +316,19 @@ volumes:
   - ../yet_another_folder_on_host:/a_folder_inside_both_containers # Another folder to be accessed by both images
 ```
 
-### 5.3 Usage
-
-After having created both a `Dockerfile` as well as a `docker-compose.yml` you can launch them with
+If instead you wanted only to run a particular service you could do so with:
 
 ```bash
-$ docker compose up
+$ docker compose -f docker-compose.yml run my_service
 ```
 
-(or again `docker-compose` depending on the version you are using) where with the option `-f` a Docker-Compose file with a different filename can be provided.
-
-Then similarly to Docker alone one is able to connect to the container from another console with
+Then similarly to the previous section one is able to connect to the container from another console with
 
 ```bash
 $ docker compose exec <docker_name> sh
 ```
 
-where `<docker_name>` is given by the name specified in the `docker-compose.yml` file and `sh` stands for the type of connection, in this case `shell`.
+where `<docker_name>` is given by the name specified in the `docker-compose.yml` file and `sh` stands for the type of comand to be execute, in this case we open a `shell`.
 
 ## 6. Selected topics
 
@@ -219,21 +336,21 @@ If you have followed this guide so far, then you should have understood the basi
 
 ### 6.1 Users and safety
 
-A few problems emerge with user rights when working from a Docker as discussed [in this Stackoverflow post](https://stackoverflow.com/questions/68155641/should-i-run-things-inside-a-docker-container-as-non-root-for-safety) and in more detail [in this blog post](https://jtreminio.com/blog/running-docker-containers-as-current-host-user/). As outlined in the latter, there are ways to work around this, passing the current user id and group as input arguments to the container. In analogy with Docker-Compose one might default to the root user or change to the current user if [arguments are supplied](https://stackoverflow.com/questions/34322631/how-to-pass-arguments-within-docker-compose).
+A few problems emerge with user rights and shared volumes when working from a Docker as discussed [in this Stackoverflow post](https://stackoverflow.com/questions/68155641/should-i-run-things-inside-a-docker-container-as-non-root-for-safety) and in more detail [in this blog post](https://jtreminio.com/blog/running-docker-containers-as-current-host-user/). In particular it might be that the container might not be able to write to the shared volume or vice versa the host user can only delete folders created by the Docker user when being a super-user. As outlined in the latter, there are ways to work around this, passing the current user id and group as input arguments to the container. In analogy with Docker-Compose one might default to the root user or change to the current user if [arguments are supplied](https://stackoverflow.com/questions/34322631/how-to-pass-arguments-within-docker-compose).
 
 I personally use Dockers in particular for developing and I am not too bothered about being super-user inside the container. If you are, and depending on your use case you should be (in particular for security reasons), then have a look at the linked posts as well as the [Visual Studio Code guide on this](https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user).
 
 ### 6.2 Graphic user interfaces
 
-As pointed out earlier Docker was never intended for graphic user interfaces but that does not mean that it can't be done. They are particularly vital when developing with ROS. The main disadvantage of it is though that there is no real portable way of doing so. It highly depends on the operating system that you are using and the manufacturer of your graphics card. The document [`Gui.md`](./Gui.md) discusses a simple way of doing so for Linux operating systems.
+As pointed out earlier Docker was never intended for graphic user interfaces and integrating them is slightly tricky as graphic user-interfaces are not part of the kernel but that does not mean that it can't be done. Graphic user interfaces are particularly vital when developing with ROS. The main disadvantage of graphic user interfaces with Docker is though that there is no real portable way of doing so. It highly depends on the operating system that you are using and the manufacturer of your graphics card. The document [`Gui.md`](./Gui.md) discusses a simple way of doing so for Linux operating systems.
 
 ### 6.3 Real-time code
 
-As mentioned another point that is often not discussed is what steps are necessary for running real-time code from inside a Docker. As outlined in [this IBM research report](https://domino.research.ibm.com/library/cyberdig.nsf/papers/0929052195DD819C85257D2300681E7B/$File/rc25482.pdf), the impact of Docker on the performance can be very low if launched with the correct options. I have discussed this also in more detail in a [dedicated repository](https://github.com/2b-t/docker-realtime), in particular focussing on `PREEMPT_RT` which is likely the most relevant for robotics.
+As mentioned another point that is often not discussed is what steps are necessary for running real-time code from inside a Docker. As outlined in [this IBM research report](https://domino.research.ibm.com/library/cyberdig.nsf/papers/0929052195DD819C85257D2300681E7B/$File/rc25482.pdf), the impact of Docker on the performance can be very low if launched with the correct options. After all you are using the kernel of the host system and the same scheduler. I have discussed this also in more detail in a [dedicated repository](https://github.com/2b-t/docker-realtime), in particular focussing on `PREEMPT_RT` which is likely the most relevant for robotics.
 
 ### 6.4 ROS inside Docker
 
-Working with the Robot Operating System (ROS) or its successor ROS2 might pose particular challenges. I have written down some notes of how I generally structure my Dockers in [`Ros.md`](./Ros.md). In particular this is concerned with working with hardware, multiple machines and time synchronization between them.
+Working with the Robot Operating System (ROS) or its successor ROS 2 might pose particular challenges, such as working with hardware and network discovery of other nodes. I have written down some notes of how I generally structure my Dockers in [`Ros.md`](./Ros.md). In particular this is concerned with working with hardware, multiple machines and time synchronization between them.
 
 ### 6.5 Setting up Visual Studio Code
 
@@ -241,4 +358,32 @@ In the last few years [Microsoft Visual Studio Code has become the most used edi
 
 ### 6.6 Multi-stage builds
 
-Another interesting topic for **slimming down the resulting containers** are [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) where only the files necessary for running are kept and every unnecessary ballast is removed. It is one of those things that you might have a look at when trying to mastering [Docker best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
+Another interesting topic for **slimming down the resulting containers** as mentioned before are [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) where only the files necessary for running are kept and every unnecessary ballast is removed. It is one of those things that you might have a look at when trying to mastering [Docker best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
+
+### 6.7 Deployment
+
+One might develop inside a container by mounting all necessary directories into the container. For simplicity one might be `root` inside the container. When deploying a container commonly a dedicated release image named e.g. `Dockerfile.release` will be created. This container might use the development image and instead of mounting the corresponding source code into the container the **required dependencies will be installed from Debian packages**. Ideally we have a CI-pipeline that produces these Debian packages (e.g. a Github Action in each repository such as [this](https://github.com/arkane-systems/apt-repo-update)) and another CI-pipeline that pushes the development image to our Docker registry (e.g. for Github Actions see [here](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)). Both of these can then trigger the generation of the release Dockerfile located in a different repository (e.g. for Github Actions see [here](https://github.com/marketplace/actions/trigger-external-workflow)). Additionally we will use another non-root user inside the Docker.
+
+```dockerfile
+# We start from the development image
+FROM some_user/some_repo:devel
+
+# We will install now packages as Debians instead of mounting the source code
+RUN echo "deb http://packages.awesome-robot.org/robot/ubuntu focal main" > /etc/apt/sources.list.d/awesome-latest.list
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 00000000000000000000000000000000
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    some-awesome-robot-full=1.0.0 \
+ && rm -rf /var/lib/apt/lists/*
+
+# Set-up a new user without password inside the Docker
+ARG GROUP_ID=1000
+ARG USER_ID=1000
+ARG USER_NAME=some_user
+RUN addgroup --gid ${GROUP_ID} ${USER_NAME}
+RUN adduser --disabled-password --gecos '' --uid ${USER_ID} --gid ${GROUP_ID} ${USER_NAME}
+USER ${USER_NAME}
+
+# Entrypoint script sources our workspace and launch the main launch file
+ENTRYPOINT["entrypoint.sh"]
+```
+
