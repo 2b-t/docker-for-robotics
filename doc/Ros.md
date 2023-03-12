@@ -145,12 +145,12 @@ or anything similar.
 While for [Docker-Compose](https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck) you might add something like:
 
 ```yaml
-healthcheck:
-  test: /ros_entrypoint.sh rostopic list || exit 1
-  interval: 1m30s
-  timeout: 10s
-  retries: 3
-  start_period: 1m
+ 9    healthcheck:
+10    test: /ros_entrypoint.sh rostopic list || exit 1
+11    interval: 1m30s
+12    timeout: 10s
+13    retries: 3
+14    start_period: 1m
 ```
 
 
@@ -165,3 +165,25 @@ ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UD
 ```
 
 Choosing a safe range for the Domain ID largely depends on the operating system and is described in more details in the [corresponding article](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html). There might be [additional settings for a DDS client such as telling it which interfaces to use](https://iroboteducation.github.io/create3_docs/setup/xml-config/). For this purpose it might make sense to mount the corresponding DDS configuration file into the Docker.
+
+
+
+## 4. Working with hardware
+
+When working with **hardware that use the network interface** such as EtherCAT slaves one might have to **share the network** with the host or remap the individual ports manually. One can automate the generation of the entries in the `/etc/hosts` file inside the container as follows:
+
+```yaml
+ 9    network_mode: "host"
+10    extra_hosts:
+11      - "${REMOTE_HOSTNAME}:${REMOTE_IP}"
+```
+
+When sharing **external devices** such as USB devices one will have to **share the `/dev` directory** with the host system as well as use [**device whitelisting**](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-devices) as follows. An overview over the IDs of the Linux allocated devices can be found [here](https://www.kernel.org/doc/html/v4.15/admin-guide/devices.html).
+
+```yaml
+ 9    volumes:
+10      - /dev:/dev
+11    device_cgroup_rules:
+12      - 'c 81:* rmw'
+13      - 'c 189:* rmw'
+```
