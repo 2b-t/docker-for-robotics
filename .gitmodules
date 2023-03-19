@@ -16,3 +16,6 @@
 [submodule "examples/realsense-ros2-docker"]
 	path = examples/realsense-ros2-docker
 	url = https://github.com/2b-t/realsense-ros2-docker
+[submodule "examples/velodyne-ros2-docker"]
+	path = examples/velodyne-ros2-docker
+	url = https://github.com/2b-t/velodyne-ros2-docker
