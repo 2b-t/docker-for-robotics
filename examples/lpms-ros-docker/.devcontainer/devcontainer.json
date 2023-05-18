@@ -1,0 +1,11 @@
+{
+  "name": "Docker for LPMS IMU",
+  "dockerComposeFile": [
+    "../docker/docker-compose-gui.yml" // Alternatives: "../docker/docker-compose-gui.yml", "../docker/docker-compose-gui-nvidia.yml"
+  ],
+  "service": "lpms_ros",
+	"workspaceFolder": "/lpms_ws",
+  "shutdownAction": "stopCompose",
+  "extensions": [
+  ]
+}

@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  lpms_ros:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    tty: true
+    volumes:
+      - /dev:/dev
+    device_cgroup_rules:
+      - 'c 188:* rmw'
+

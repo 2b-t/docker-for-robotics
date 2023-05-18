@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  lpms_ros:
+    extends:
+      file: docker-compose-gui.yml
+      service: lpms_ros
+    environment:
+     - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
