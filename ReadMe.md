@@ -23,8 +23,9 @@ This guide is structured in four chapters:
 - [**Set-up with Visual Studio Code**](./doc/VisualStudioCodeSetup.md): Walks you through the set-up of containers with Visual Studio Code.
 - [**Graphic user interfaces and Docker**](./doc/Gui.md): Discusses the challenges of using Docker with graphic user interfaces and presents workarounds.
 - [**ROS and Docker**](./doc/Ros.md): Discusses best-practices of Docker and ROS/ROS 2.
+- [**Working with hardware**](./doc/WorkingWithHardware.md): Discusses best-practices when working with hardware.
 
-It is further extended by an external guide on **Docker for real-time applications with `PREEMPT_RT`** that can be found [here](https://github.com/2b-t/docker-realtime) as well as an example of such a Docker for the **Intel Realsense sensors** that can be found [here](https://github.com/2b-t/realsense-ros2-docker).
+It is further extended by an external guide on **Docker for real-time applications with `PREEMPT_RT`** that can be found [here](https://github.com/2b-t/docker-realtime) as well as several examples for giving software running inside a container access to hardware.
 
  
 
