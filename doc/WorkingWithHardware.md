@@ -26,6 +26,8 @@ When sharing **external devices** such as USB devices one will have to **share t
 
 The association of these numbers and the devices is given in [`/proc/devices`](https://unix.stackexchange.com/questions/198950/how-to-get-a-list-of-major-number-driver-associations).
 
+In case you are not quitee sure which group a device belongs to you might also run the container with extended privileges as [`privileged`](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities). Note that this is in generally not recommended as this basically removes all types of isolation and as such might pose a security risk in particular when being `root` inside the container.
+
 ### 1.1 Determining `device_cgroup_rules` for connected devices
 
 If we have no idea what `device_cgroup_rules` we might need for a particular device but we have the device at hand we might do the following.
