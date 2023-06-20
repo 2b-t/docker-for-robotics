@@ -248,3 +248,9 @@ In case you are terminated with the error message "Current user does not have pe
 As soon as you have entered the Docker you should be greeted by a terminal inside it and the green icon on the bottom left should state **`Dev Container`**. You can open a new terminal by selecting **`Terminal/New Terminal`** any time. You can now browse the Docker container just like a regular terminal and access the folders inside it as if they were on the host system (see the screenshot below).
 
 ![Visual Studio Code terminal inside the container](../media/visual_studio_code_dev_containers_terminal.png)
+
+
+
+### 1.4 Debugging
+
+It might happen that the Visual Studio Code integration might terminate and does not output much useful information. This might be the case if you are asking it to run a container with the `nvidia-container-runtime` but it is not installed on your system or your `devcontainer.json` mentions the wrong service and/or workspace. Similarly it happened in the past that the Visual Studio Code extension was not compatible with Docker itself. In this case you might have to up- or downgrade the Docker version you are using (see e.g. [here](https://github.com/microsoft/vscode-remote-release/issues/7958)). In case this emerges it is worth **checking the [VSC remote container issues on Github](https://github.com/microsoft/vscode-remote-release/issues)** and trying to **build your image without cache**. If all of this does not work it can be helpful to go back to the **Docker command line commands** and launch them manually to see if there are any issues with the Docker engine itself.
