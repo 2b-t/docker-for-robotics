@@ -48,6 +48,15 @@ $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
+After installation you will want to make sure that Docker can be **run without `sudo`** as described [here](https://docs.docker.com/engine/install/linux-postinstall/):
+
+```bash
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+```
+
+Finally log out and log back in again.
+
 
 
 ## 4. Usage
@@ -62,7 +71,7 @@ As discussed above you can pull an image from the [Dockerhub](https://hub.docker
 $ docker run hello-world
 ```
 
-`hello-world` is an image intended for testing purposes. After executing the command you should see some output to the console that does not contain any error messages.
+`hello-world` is an image intended for testing purposes. After executing the command you should see some output to the console that does not contain any error messages. In case you are not able to run the command above, prepend it with `sudo` and retry. If this works please go back to the previous section and enable `sudo`less Docker as this will be crucial for e.g. the Visual Studio Code set-up.
 
 If you want to find out what other images you could start from just [browse the Dockerhub](https://hub.docker.com/), e.g. for [Ubuntu](https://hub.docker.com/_/ubuntu). You will see that there are different versions with corresponding tags available. For example to run a Docker with Ubuntu 20.04 installed you could use the tag `20.04` or `focal` resulting e.g. in the command
 
