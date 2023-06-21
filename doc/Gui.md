@@ -179,7 +179,9 @@ Then run it with
 $ glxgears -info
 ```
 
-This should visualize the following display and output the following information:
+This should visualize the following window and output the following information:
+
+![glxgears application](../media/glxgears.png)
 
 ```
 GL_RENDERER   = Quadro K2200/PCIe/SSE2
