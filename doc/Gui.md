@@ -121,6 +121,7 @@ services:
      - DISPLAY=${DISPLAY}
      - QT_X11_NO_MITSHM=1
      - NVIDIA_VISIBLE_DEVICES=all # Share devices of host system
+     - NVIDIA_DRIVER_CAPABILITIES=all # This allows the guest system to use the GPU also for visualization
     runtime: nvidia # Specify runtime for container
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -130,6 +131,73 @@ services:
 Depending on how your system is configured your computer might still decide to use the integrated Intel Graphics instead of your Nvidia card in order to save power. In this case I'd recommend you to switch the Nvidia X Server (that is automatically installed with the driver) to performance mode instead of on-demand as shown in the screenshot below. This way the Nvidia card should always be used instead of the Intel Graphics.
 
 ![Nvidia X Server configuration](../media/nvidia_x_server.png)
+
+
+
+#### 2.2.2 Testing the graphic acceleration inside your container
+
+After following above steps **make sure that inside your container you can use `nvidia-smi`** and it finds your card:
+
+```bash
+$ nvidia-smi
+Wed Jun 21 00:01:46 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 530.41.03              Driver Version: 530.41.03    CUDA Version: 12.1     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                  Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf            Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Quadro K2200                    Off| 00000000:03:00.0  On |                  N/A |
+| 42%   39C    P8                1W /  39W|    430MiB /  4096MiB |     10%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
++---------------------------------------------------------------------------------------+
+```
+
+In case the command is not recognized, make sure that you can run it successfully outside the Docker. In case it does not even work outside the Nvidia driver you are currently using is likely incompatible with your graphics card. In case it just does not work inside the Docker likely you made a mistake in your Docker-Compose file.
+
+Just seeing the card with `nvidia-smi` is though not sufficient. If you do not **set the environment variable `NVIDIA_DRIVER_CAPABILITIES`**, e.g. to `NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute` or **`NVIDIA_DRIVER_CAPABILITIES=all`** the graphic acceleration will not work properly.
+
+For testing if the graphic acceleration actually works inside the Docker you can use the **`glxgears`** application. Install it with
+
+```bash
+$ sudo apt-get install mesa-utils
+```
+
+on your host system as well as inside the container and compare the two.
+
+Then run it with
+
+```bash
+$ glxgears -info
+```
+
+This should visualize the following display and output the following information:
+
+```
+GL_RENDERER   = Quadro K2200/PCIe/SSE2
+GL_VERSION    = 4.6.0 NVIDIA 530.41.03
+GL_VENDOR     = NVIDIA Corporation
+```
+
+as well as the current frames per second `8579 frames in 5.0 seconds = 1715.776 FPS` every couple of seconds. On a laptop with an additional integrated graphics card this already should tell you which of the two, the dedicated or the integrated one, is being used.
+
+In case you did not set `NVIDIA_DRIVER_CAPABILITIES` inside the container the output from `glxgears` will look as follows and you might observe stuttering in applications such as Gazebo:
+
+```
+GL_RENDERER   = llvmpipe (LLVM 12.0.0, 256 bits)
+GL_VERSION    = 3.1 Mesa 21.2.6
+GL_VENDOR     = Mesa/X.org
+```
+
+
 
 ### 2.3 Avoiding duplicate configurations
 
@@ -175,6 +243,7 @@ services:
       service: some_name
     environment:
      - NVIDIA_VISIBLE_DEVICES=all
+     - NVIDIA_DRIVER_CAPABILITIES=all
     runtime: nvidia
 ```
 

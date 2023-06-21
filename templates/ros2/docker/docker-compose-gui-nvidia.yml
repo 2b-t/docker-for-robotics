@@ -6,4 +6,5 @@ services:
       service: ros2_docker
     environment:
      - NVIDIA_VISIBLE_DEVICES=all
+     - NVIDIA_DRIVER_CAPABILITIES=all
     runtime: nvidia
