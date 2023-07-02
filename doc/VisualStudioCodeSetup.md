@@ -38,12 +38,14 @@ The `.devcontainer` file let's Visual Studio Code know if it is dealing with [Do
     "../docker/docker-compose.yml"
   ],
   "service": "ros_docker",
-	"workspaceFolder": "/benchmark",
+  "workspaceFolder": "/benchmark",
   "shutdownAction": "stopCompose",
   "extensions": [
   ]
 }
 ```
+
+You can also [access local variables on the host system with `${localEnv:SOME_HOST_VAR}`](https://code.visualstudio.com/remote/advancedcontainers/environment-variables).
 
 The contents of `.vscode` depend on the programming language and the additional plug-ins you want to use, e.g. for Linting/static code analysis. One can configure for example tasks that can be executed with key shortcuts.
 
