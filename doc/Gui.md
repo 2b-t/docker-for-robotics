@@ -201,6 +201,18 @@ GL_VENDOR     = Mesa/X.org
 
 
 
+#### 2.2.3 Hybrid graphics cards and power management
+
+On computers with an integrated graphics card (e.g. notebooks), you might run into issues where graphic acceleration might not work as power management will choose the integrated graphics card over the dedicated one. Run [`$ prime-select query`](https://github.com/linuxmint/nvidia-prime/blob/master/prime-select) to see what the output is (`nvidia`, `intel` or `on-demand`). Depending on the output the open-source or Nvidia version of libGL will be used. You can switch between them by executing `$ prime-select nvidia`. Similarly you can output the available graphic processors with `$ xrandr --listproviders`. In case you have an integrated and dedicated graphic card there should be two entries: `0` and `1` where the order depends on the setting of `prime-select`.
+
+You should be able to switch between the two with [**PRIME offloading**](https://wiki.archlinux.org/title/PRIME). Defining the environment variable `DRI_PRIME` allows you to use the discrete graphics card  e.g. `DRI_PRIME=1 glxinfo`. Similarly Nvidia exposes the environment variable [`__NV_PRIME_RENDER_OFFLOAD`](https://download.nvidia.com/XFree86/Linux-x86_64/435.17/README/primerenderoffload.html) for this purpose, e.g. `$ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia glxinfo`. Finally you can use `prime-run` to force a program to offload to the dedicated Nvidia GPU:
+
+```bash
+$ prime-run some_program
+```
+
+
+
 ### 2.3 Avoiding duplicate configurations
 
 You can already see that there are quite a few common options between the two configurations. While sadly Docker-Compose does not have conditional execution (yet) one might [override or extend an existing configuration file](https://github.com/Yelp/docker-compose/blob/master/docs/extends.md) (see also [`extends`](https://docs.docker.com/compose/extends/) as well this [Visual Studio Code guide](https://code.visualstudio.com/docs/remote/create-dev-container#_extend-your-docker-compose-file-for-development)).
