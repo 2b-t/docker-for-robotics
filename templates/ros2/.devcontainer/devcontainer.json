@@ -4,7 +4,7 @@
     "../docker/docker-compose-gui.yml" // Alternatives: "../docker/docker-compose-gui.yml", "../docker/docker-compose-gui-nvidia.yml"
   ],
   "service": "ros2_docker",
-  "workspaceFolder": "/ros2_ws",
+  "workspaceFolder": "/ament_ws",
   "shutdownAction": "stopCompose",
   "extensions": [
   ]

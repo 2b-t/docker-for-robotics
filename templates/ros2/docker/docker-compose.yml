@@ -4,16 +4,21 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      target: dev
+      args:
+        - USERNAME=${USERNAME:-developer}
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
     container_name: ros2_docker
     environment:
       - ROS_DOMAIN_ID=0
       - ROS2_NETWORK_INTERFACE=${YOUR_NETWORK_INTERFACE}
-      - CYCLONEDDS_URI=/ros2_ws/dds/cyclone.xml
+      - CYCLONEDDS_URI=/ament_ws/dds/cyclone.xml
     extra_hosts:
       - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
     network_mode: "host"
     tty: true
     volumes:
-      - ../src:/ros2_ws/src
-      - ../dds:/ros2_ws/dds
+      - ../src:/ament_ws/src
+      - ../dds:/ament_ws/dds
 
