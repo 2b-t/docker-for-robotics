@@ -283,3 +283,36 @@ I can then specify which file should be launched to Docker-Compose with e.g.
 $ docker-compose -f docker-compose-gui-nvidia.yml up
 ```
 
+
+
+### 2.4 Known issues
+
+In certain versions of Linux you might run into the problem that **certain applications using hardware acceleration (e.g. Rviz and Gazebo) might not be displayed correctly**, instead black windows are displayed similar to the screenshot below:
+
+ ![RViz hardware acceleration bug](../media/rviz_mesa_bug.png)
+
+This is a [known bug in the Mesa implementation of OpenGL present on e.g. Ubuntu 22.04](https://github.com/ros2/rviz/issues/948#issuecomment-1427569107) and can be resolved by **upgrading  Mesa or by switching to Nvidia's implementation by using the Nvidia container runtime** (in case you have an Nvidia grapics card).
+
+The update can be performed by running the following commands inside the Docker container
+
+```bash
+$ apt-get install software-properties-common
+$ add-apt-repository ppa:kisak/kisak-mesa
+$ apt-get update
+$ apt-get upgrade
+```
+
+or by adding an additional layer to your Dockerfile:
+
+```dockerfile
+RUN apt-get update \
+ && apt-get install -y \
+    install software-properties-common \
+ && add-apt-repository ppa:kisak/kisak-mesa \
+ && apt-get update \
+ && apt-get upgrade -y \
+ && rm -rf /var/lib/apt/lists/*
+```
+
+
+
