@@ -4,14 +4,19 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      target: dev
+      args:
+        - USERNAME=${USERNAME:-developer}
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
     container_name: ros_docker
     environment:
       - ROS_MASTER_URI=http://${ROS_MASTER_IP}:11311
-      - ROS_HOSTNAME=${YOUR_IP}
+      - ROS_IP=${YOUR_IP}
     extra_hosts:
       - "${ROS_MASTER_HOSTNAME}:${ROS_MASTER_IP}"
     network_mode: "host"
     tty: true
     volumes:
-      - ../src:/ros_ws/src
+      - ../src:/catkin_ws/src
 
