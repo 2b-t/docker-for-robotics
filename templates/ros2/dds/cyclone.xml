@@ -1,10 +1,12 @@
 <CycloneDDS>
   <Domain>
     <Discovery>
-      <ParticipantIndex>0</ParticipantIndex>
-      <!-- <Peers>
-        <Peer Address="${ROBOT_IP}"/>
-      </Peers> -->
+      <ParticipantIndex>auto</ParticipantIndex>
+      <Peers>
+        <!-- A peer on the loopback device is required for local communication -->
+        <!-- <Peer address="127.0.0.1"/> -->
+        <Peer address="${ROBOT_IP}"/>
+      </Peers>
     </Discovery>
     <General>
       <AllowMulticast>false</AllowMulticast>
@@ -16,9 +18,5 @@
       </Interfaces>
       <Transport>default</Transport>
     </General>
-    <!-- The following lines are necessary if transport is set to tcp -->
-    <!-- <TCP>
-      <Port>1234</Port>
-    </TCP> -->
   </Domain>
 </CycloneDDS>
