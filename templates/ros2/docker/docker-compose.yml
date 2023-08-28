@@ -19,6 +19,7 @@ services:
       - CYCLONEDDS_URI=${AMENT_WORKSPACE_DIR}/dds/cyclone.xml
     extra_hosts:
       - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
+    image: ros2_template:devel
     network_mode: "host"
     tty: true
     volumes:
