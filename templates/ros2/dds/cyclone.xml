@@ -2,25 +2,23 @@
   <Domain>
     <Discovery>
       <ParticipantIndex>0</ParticipantIndex>
-      <Peers>
+      <!-- <Peers>
         <Peer Address="${ROBOT_IP}"/>
-      </Peers>
+      </Peers> -->
     </Discovery>
     <General>
       <AllowMulticast>false</AllowMulticast>
       <EnableMulticastLoopback>true</EnableMulticastLoopback>
       <Interfaces>
+        <!-- The loopback device is required for local communication -->
+        <!-- <NetworkInterface address="127.0.0.1"/> -->
         <NetworkInterface address="${YOUR_IP}"/>
       </Interfaces>
       <Transport>default</Transport>
-      <!--
-      <Transport>tcp</Transport>
-      -->
     </General>
-    <!--
-    <TCP>
+    <!-- The following lines are necessary if transport is set to tcp -->
+    <!-- <TCP>
       <Port>1234</Port>
-    </TCP>
-    -->
+    </TCP> -->
   </Domain>
 </CycloneDDS>
