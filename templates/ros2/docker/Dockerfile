@@ -3,8 +3,8 @@
 ##############
 FROM ros:humble-ros-base as base
 
-ENV ROS_WS_DIR="/ament_ws"
-WORKDIR ${ROS_WS_DIR}
+ARG AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
+WORKDIR ${AMENT_WORKSPACE_DIR}
 
 SHELL ["/bin/bash", "-c"]
 
@@ -15,6 +15,11 @@ RUN apt-get update \
     git \
     python3-colcon-clean \
     python3-osrf-pycommon \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+ && apt-get -y install \
+    ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
  && rm -rf /var/lib/apt/lists/*
 
 # Add additional installation instructions here...
@@ -53,14 +58,14 @@ RUN addgroup --gid ${GID} ${USERNAME} \
  && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
  && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
  && chown -R ${UID}:${GID} /home/${USERNAME} \
- && chown -R ${UID}:${GID} ${ROS_WS_DIR}
+ && chown -R ${UID}:${GID} ${AMENT_WORKSPACE_DIR}
 
-COPY "/.vscode" "${ROS_WS_DIR}/.vscode"
-RUN sed -i -E "s/(ROS_DISTRO=\\$\{1:-\").*(\"\})/\1${ROS_DISTRO}\2/" ${ROS_WS_DIR}/.vscode/ros2_source.bash \
- && echo "alias rsource='source ${ROS_WS_DIR}/.vscode/ros2_source.bash'" >> /home/${USERNAME}/.bash_aliases \
- && echo "alias rbuild='(cd ${ROS_WS_DIR} && colcon build)'" >> /home/${USERNAME}/.bash_aliases \
- && echo "alias rclean='(cd ${ROS_WS_DIR} && colcon clean workspace -y)'" >> /home/${USERNAME}/.bash_aliases \
- && echo "source ${ROS_WS_DIR}/.vscode/ros2_source.bash" >> /home/${USERNAME}/.bashrc
+COPY "/.vscode" "${AMENT_WORKSPACE_DIR}/.vscode"
+RUN sed -i -E "s/(ROS_DISTRO=\\$\{1:-\").*(\"\})/\1${ROS_DISTRO}\2/" ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash \
+ && echo "alias rsource='source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash'" >> /home/${USERNAME}/.bash_aliases \
+ && echo "alias rbuild='(cd ${AMENT_WORKSPACE_DIR} && colcon build)'" >> /home/${USERNAME}/.bash_aliases \
+ && echo "alias rclean='(cd ${AMENT_WORKSPACE_DIR} && colcon clean workspace -y)'" >> /home/${USERNAME}/.bash_aliases \
+ && echo "source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash" >> /home/${USERNAME}/.bashrc
 
 USER ${USERNAME}
 

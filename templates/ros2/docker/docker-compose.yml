@@ -9,16 +9,19 @@ services:
         - USERNAME=${USERNAME:-developer}
         - UID=${UID:-1000}
         - GID=${UID:-1000}
+        - AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
     container_name: ros2_docker
     environment:
-      - ROS_DOMAIN_ID=0
-      - ROS2_NETWORK_INTERFACE=${YOUR_NETWORK_INTERFACE}
-      - CYCLONEDDS_URI=/ament_ws/dds/cyclone.xml
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - YOUR_IP=${YOUR_IP}
+      - ROBOT_IP=${ROBOT_IP}
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=${AMENT_WORKSPACE_DIR}/dds/cyclone.xml
     extra_hosts:
       - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
     network_mode: "host"
     tty: true
     volumes:
-      - ../src:/ament_ws/src
-      - ../dds:/ament_ws/dds
+      - ../src:${AMENT_WORKSPACE_DIR}/src
+      - ../dds:${AMENT_WORKSPACE_DIR}/dds
 

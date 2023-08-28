@@ -1,7 +1,26 @@
 <CycloneDDS>
-   <Domain>
-     <General>
-        <NetworkInterfaceAddress>${ROS2_NETWORK_INTERFACE}</NetworkInterfaceAddress>
+  <Domain>
+    <Discovery>
+      <ParticipantIndex>0</ParticipantIndex>
+      <Peers>
+        <Peer Address="${ROBOT_IP}"/>
+      </Peers>
+    </Discovery>
+    <General>
+      <AllowMulticast>false</AllowMulticast>
+      <EnableMulticastLoopback>true</EnableMulticastLoopback>
+      <Interfaces>
+        <NetworkInterface address="${YOUR_IP}"/>
+      </Interfaces>
+      <Transport>default</Transport>
+      <!--
+      <Transport>tcp</Transport>
+      -->
     </General>
-   </Domain>
+    <!--
+    <TCP>
+      <Port>1234</Port>
+    </TCP>
+    -->
+  </Domain>
 </CycloneDDS>
