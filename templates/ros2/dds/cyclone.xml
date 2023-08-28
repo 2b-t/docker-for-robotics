@@ -2,9 +2,9 @@
   <Domain>
     <Discovery>
       <ParticipantIndex>auto</ParticipantIndex>
-      <!-- Static IPs when de-activating multicast discovery -->
+      <!-- Static IPs due to de-activating multicast discovery -->
       <Peers>
-        <!-- <Peer address="127.0.0.1"/> -->
+        <Peer address="localhost"/>
         <Peer address="${ROBOT_IP}"/>
       </Peers>
     </Discovery>
@@ -12,8 +12,6 @@
       <AllowMulticast>false</AllowMulticast>
       <EnableMulticastLoopback>true</EnableMulticastLoopback>
       <Interfaces>
-        <!-- The loopback device is required for local communication -->
-        <!-- <NetworkInterface address="127.0.0.1"/> -->
         <NetworkInterface address="${YOUR_IP}"/>
       </Interfaces>
       <Transport>default</Transport>
