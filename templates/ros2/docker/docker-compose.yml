@@ -6,10 +6,10 @@ services:
       dockerfile: docker/Dockerfile
       target: dev
       args:
+        - AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
         - USERNAME=${USERNAME:-developer}
         - UID=${UID:-1000}
         - GID=${UID:-1000}
-        - AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
     container_name: ros2_docker
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
