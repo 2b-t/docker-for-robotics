@@ -35,7 +35,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get install -y \
-    iperf \
+    iperf3 \
     iputils-ping \
     net-tools \
     python3-vcstool \
