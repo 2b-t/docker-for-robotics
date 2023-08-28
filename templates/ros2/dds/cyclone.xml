@@ -2,8 +2,8 @@
   <Domain>
     <Discovery>
       <ParticipantIndex>auto</ParticipantIndex>
+      <!-- Static IPs when de-activating multicast discovery -->
       <Peers>
-        <!-- A peer on the loopback device is required for local communication -->
         <!-- <Peer address="127.0.0.1"/> -->
         <Peer address="${ROBOT_IP}"/>
       </Peers>
