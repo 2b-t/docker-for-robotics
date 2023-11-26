@@ -153,8 +153,6 @@ While for [Docker-Compose](https://docs.docker.com/compose/compose-file/compose-
 14    start_period: 1m
 ```
 
-
-
 ## 3. ROS 2
 
 ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UDP](https://wiki.ros.org/ROS/UDPROS) communication with [DDS](https://design.ros2.org/articles/ros_on_dds.html). As a result the [`ROS_DOMAIN_ID`](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html) replaces the IP-based set-up. For a container this means one would create a `ROS_DOMAIN_ID` environment variable that again might be controlled by an [`.env` file](https://vsupalov.com/docker-arg-env-variable-guide/):
