@@ -1,6 +1,6 @@
 # Graphic user interfaces inside Docker
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - August 2022)
+Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
 
 
 

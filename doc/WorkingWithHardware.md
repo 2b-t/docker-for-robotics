@@ -1,6 +1,6 @@
 # ROS inside Docker
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - February 2023)
+Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
 
 
 
