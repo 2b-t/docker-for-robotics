@@ -1,6 +1,6 @@
 # Docker for Robotics with the Robot Operating System (ROS/ROS 2)
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (August 2021 - February 2023)
+Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
 
 [![ROS Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml/badge.svg)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml) [![ROS 2 Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml/badge.svg?branch=main)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -18,12 +18,13 @@ This repository used to be part of [another guide](https://github.com/2b-t/docke
 
 This guide is structured in four chapters:
 
-- [**Motivation**](./doc/Motivation.md): Tries to answer why you should use Docker as a company or research institution.
+- [**Motivation**](./doc/Motivation.md): Tries to give you good reasonds for why you should use Docker as a company or research institution.
 - [**Introduction to Docker and Docker-Compose**](./doc/Introduction.md): Introduces fundamental concepts of container-based development.
 - [**Set-up with Visual Studio Code**](./doc/VisualStudioCodeSetup.md): Walks you through the set-up of containers with Visual Studio Code.
 - [**Graphic user interfaces and Docker**](./doc/Gui.md): Discusses the challenges of using Docker with graphic user interfaces and presents workarounds.
 - [**ROS and Docker**](./doc/Ros.md): Discusses best-practices of Docker and ROS/ROS 2.
 - [**Working with hardware**](./doc/WorkingWithHardware.md): Discusses best-practices when working with hardware.
+- [**Templates**](./templates): Provides templates for ROS and ROS 2 that you can build your own workspace off.
 
 It is further extended by an external guide on **Docker for real-time applications with `PREEMPT_RT`** that can be found [here](https://github.com/2b-t/docker-realtime) as well as several examples for giving software running inside a container access to hardware.
 

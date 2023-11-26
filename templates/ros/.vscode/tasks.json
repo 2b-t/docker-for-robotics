@@ -1,3 +1,4 @@
+// Author: Tobit Flatscher - github.com/2b-t (2021)
 {
   // See https://go.microsoft.com/fwlink/?LinkId=733558
   // for the documentation about the tasks.json format
@@ -9,8 +10,15 @@
       "detail": "Source the current environment variables.",
       "type": "shell",
       "command": "source ${workspaceFolder}/.vscode/ros_source.bash",
-      "problemMatcher": [],
-      "dependsOn": []
+      "problemMatcher": []
+    },
+    // Import repositories with vcs tool
+    {
+      "label": "vcs",
+      "detail": "Import dependencies with vcs tool.",
+      "type": "shell",
+      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder}/src && vcs import < .repos)",
+      "problemMatcher": []
     },
     // Install ROS dependencies
     {
@@ -18,8 +26,7 @@
       "detail": "Install all dependencies specified in the workspaces package.xml files.",
       "type": "shell",
       "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y)",
-      "problemMatcher": [],
-      "dependsOn": []
+      "problemMatcher": []
     },
     // Build tasks
     {
@@ -67,8 +74,7 @@
       "detail": "Run the clean target.",
       "type": "shell",
       "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin clean --yes)",
-      "problemMatcher": "$gcc",
-      "dependsOn": []
+      "problemMatcher": "$gcc"
     },
     {
       "label": "purge",
