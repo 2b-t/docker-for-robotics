@@ -93,9 +93,10 @@ You can test the communication between the two machines by sourcing the environm
 As a best practice I normally use a  [`.env` file](https://vsupalov.com/docker-arg-env-variable-guide/) that I place in the same folder as the `Dockerfile` and the `docker-compose.yaml` containing the IPs:
 
 ```bash
-REMOTE_IP="192.168.100.1"
-REMOTE_HOSTNAME="some_host"
-LOCAL_IP="192.168.100.2"
+CATKIN_WORKSPACE_DIR="/catkin_ws"
+YOUR_IP="192.168.100.2"
+ROBOT_IP="192.168.100.1"
+ROBOT_HOSTNAME="some_host"
 ```
 
 The IPs inside this file can then be modified and are used inside the Docker-Compose file to set-up the container: The `/etc/hosts` file as well as the `ROS_MASTER_URI` and the `ROS_HOSTNAME`:
@@ -108,21 +109,23 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     environment:
-      - ROS_MASTER_URI=http://${REMOTE_IP}:11311
-      - ROS_HOSTNAME=${LOCAL_IP}
+      - ROS_MASTER_URI=http://${ROBOT_IP}:11311
+      - ROS_IP=${YOUR_IP}
     network_mode: "host"
     extra_hosts:
-      - "${REMOTE_HOSTNAME}:${REMOTE_IP}"
+      - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
     tty: true
     volumes:
-      - ../src:/ros_ws/src
+      - ../src:/${CATKIN_WORKSPACE_DIR}/src
 ```
 
 In order to update the IPs though with this approach you will have to rebuild the container. As long as you did not make any modifications to the Dockerfile it should though use the cached layers and should be very quick. But any progress inside the container will be lost when switching IP!
 
+An example configuration can be found [here](../templates/ros/docker).
+
 #### 2.1.2 Combining different package and ROS versions
 
-Combining different ROS 1 versions is not officially supported but largely works as long as message definitions have not changed. This is problematic with constantly evolving packages such as [Moveit](https://moveit.ros.org/). The interface between the containers in this case has to be chosen wisely such that the used messages do not change across between the involved distributions. You can use [`rosmsg md5 <message_type>`](https://wiki.ros.org/rosmsg#rosmsg_md5) in order to verify quickly if the message definitions have changed: If the two `md5` hashes are the same then the two distributions should be able to communicate via this message.
+Combining different ROS 1 versions is not officially supported but largely works as long as message definitions have not changed. This is problematic with constantly evolving packages such as [Moveit](https://moveit.ros.org/). The interface between the containers in this case has to be chosen wisely such that the used messages do not change across between the involved distributions. You can use [`rosmsg md5 <message_type>`](https://wiki.ros.org/rosmsg#rosmsg_md5) in order to verify quickly if the message definitions have changed: If the two `md5` hashes are the same then the two distributions should be able to communicate via this message. And even if the message hashes are different you might go ahead and compile the message, as well as packages depending on it, from source (do not forget to uninstall the ones installed through Debian packages). This way both distributions will have again the same message definitions.
 
 ### 2.3 Healthcheck
 
@@ -146,11 +149,11 @@ While for [Docker-Compose](https://docs.docker.com/compose/compose-file/compose-
 
 ```yaml
  9    healthcheck:
-10    test: /ros_entrypoint.sh rostopic list || exit 1
-11    interval: 1m30s
-12    timeout: 10s
-13    retries: 3
-14    start_period: 1m
+10      test: /ros_entrypoint.sh rostopic list || exit 1
+11      interval: 1m30s
+12      timeout: 10s
+13      retries: 3
+14      start_period: 1m
 ```
 
 ## 3. ROS 2
@@ -163,3 +166,23 @@ ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UD
 ```
 
 Choosing a safe range for the Domain ID largely depends on the operating system and is described in more details in the [corresponding article](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html). There might be [additional settings for a DDS client such as telling it which interfaces to use](https://iroboteducation.github.io/create3_docs/setup/xml-config/). For this purpose it might make sense to mount the corresponding DDS configuration file into the Docker.
+
+Another thing you might want to configure is the **DDS middleware** to be used. In ROS 2 one might choose between different (free or payment) middleware implementations such as FastDDS and CycloneDDS. This will be outlined in more detail in the next section.
+
+What I generally do is define the corresponding environment variables such as [`RMW_IMPLEMENTATION`](https://docs.ros.org/en/humble/How-To-Guides/Working-with-multiple-RMW-implementations.html) and [`CYCLONEDDS_URI`](https://cyclonedds.io/docs/cyclonedds/latest/config/index.html) in the case of cyclone and mount the dds configuration as a volume inside the container.
+
+```yaml
+ 9    environment:
+10      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+11      - CYCLONEDDS_URI=${AMENT_WORKSPACE_DIR}/dds/cyclone.xml
+12    network_mode: "host"
+13    volumes:
+14      - ../dds:${AMENT_WORKSPACE_DIR}/dds
+```
+
+For an example of what this configuration might look like have a look at [this folder](../templates/ros2/docker).
+
+## 4. Bridging ROS 1 and ROS 2
+
+Setting the DDS middleware as described above is in particular important for cross-distro communication as **different ROS distros** ship with [**different default DDS implementations**](https://docs.ros.org/en/humble/Installation/DDS-Implementations.html). Neither communication between different DDS implementations nor different ROS 2 distributions is currently officially supported (for more details see [here](https://github.com/ros2/ros2_documentation/issues/3288)) but similarly to ROS 1 if the **messages have not changed** (or you compile the messages as well as the packages using them from source) and you are **using the same DDS vendor across all involved distros** generally communication between the different distros can be achieved. This can also be useful for **bridging ROS 1 to ROS 2**. The last Ubuntu version to support both ROS 1 (Noetic) and ROS 2 (Galactic) is Ubuntu 20.04. You can use the corresponding [**Galactic ROS 1 bridge Docker**](https://hub.docker.com/layers/library/ros/galactic-ros1-bridge/images/sha256-a2f06953930b0a209295138745d606b1936f0b0564106df9230e2a6612b8b9a2?context=explore). In case message definitions have changed from Galactic to the distro that you are using (the ROS 2 API is not stable yet!) you might have to compile the corresponding messages from source. The main advantage over other solutions for having the two run alongside is that unlike to other solutions ([here](https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html) or [here](https://github.com/TommyChangUMD/ros-humble-ros1-bridge-builder/tree/main)) you will have none or only very few repositories that have to be compiled from source and can't be installed from a Debian package.
+
