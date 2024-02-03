@@ -4,8 +4,12 @@
 FROM ros:noetic-robot as base
 
 ARG CATKIN_WORKSPACE_DIR=${CATKIN_WORKSPACE_DIR}
-WORKDIR ${CATKIN_WORKSPACE_DIR}
 
+LABEL org.opencontainers.image.authors="tobit.flatscher@outlook.com"
+LABEL description="ROS Noetic Docker template"
+LABEL version="1.0"
+
+WORKDIR ${CATKIN_WORKSPACE_DIR}
 SHELL ["/bin/bash", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -50,7 +54,10 @@ RUN apt-get update \
 
 ENV DEBIAN_FRONTEND=dialog
 
-RUN addgroup --gid ${GID} ${USERNAME} \
+RUN apt-get update \
+ && apt-get install -y sudo \
+ && rm -rf /var/lib/apt/lists/* \
+ && addgroup --gid ${GID} ${USERNAME} \
  && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
  && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
  && chown -R ${UID}:${GID} /home/${USERNAME} \
