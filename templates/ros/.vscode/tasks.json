@@ -4,95 +4,94 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
-    // Source the workspace (attention: dependsOn will uses a new console)
-    {
-      "label": "source",
-      "detail": "Source the current environment variables.",
-      "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash",
-      "problemMatcher": []
-    },
     // Import repositories with vcs tool
     {
       "label": "vcs",
       "detail": "Import dependencies with vcs tool.",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder}/src && vcs import < .repos)",
-      "problemMatcher": []
+      "command": "vcs import < .repos",
+      "options": {
+        "cwd": "${workspaceFolder}/src"
+      }
     },
     // Install ROS dependencies
     {
       "label": "install dependencies",
       "detail": "Install all dependencies specified in the workspaces package.xml files.",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y)",
-      "problemMatcher": []
+      "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
     // Build tasks
     {
       "label": "build",
       "detail": "Build the workspace (default).",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Release' -Wall -Wextra -Wpedantic)",
+      "command": "catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Release' -Wall -Wextra -Wpedantic",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": "$gcc",
-      "dependsOn": [
-        "install dependencies"
-      ]
+      "problemMatcher": "$gcc"
     },
     {
-      "label": "debug",
+      "label": "build debug",
       "detail": "Build the workspace (debug).",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Debug' -Wall -Wextra -Wpedantic)",
+      "command": "catkin build --cmake-args '-DCMAKE_BUILD_TYPE=Debug' -Wall -Wextra -Wpedantic",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "group": "build",
-      "problemMatcher": "$gcc",
-      "dependsOn": [
-        "install dependencies"
-      ]
+      "problemMatcher": "$gcc"
     },
     // Test tasks
     {
       "label": "test",
       "detail": "Run all unit tests and show results.",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin run_tests)",
+      "command": "catkin run_tests",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "group": {
         "kind": "test",
         "isDefault": true
-      },
-      "dependsOn": [
-        "install dependencies"
-      ]
+      }
     },
     // Clean
     {
       "label": "clean",
       "detail": "Run the clean target.",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && catkin clean --yes)",
-      "problemMatcher": "$gcc"
+      "command": "catkin clean --yes",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
     {
       "label": "purge",
       "detail": "Purge workspace by deleting all generated files.",
       "type": "shell",
-      "command": "(cd ${workspaceFolder} && rm -fr .catkin_tools build install log && py3clean .)",
-      "problemMatcher": []
+      "command": "rm -fr .catkin_tools build install log && py3clean .",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
     // Start ROS Master node
     {
       "label": "roscore",
       "detail": "Start the ROS master node.",
       "type": "shell",
-      "command": "source ${workspaceFolder}/.vscode/ros_source.bash && (cd ${workspaceFolder} && roscore)",
-      "problemMatcher": "$gcc",
-      "dependsOn": [
-        "build"
-      ]
+      "command": "roscore",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
   ],
   "inputs": [
