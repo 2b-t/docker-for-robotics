@@ -68,12 +68,17 @@ RUN apt-get update \
  && chown -R ${UID}:${GID} /home/${USERNAME} \
  && chown -R ${UID}:${GID} ${AMENT_WORKSPACE_DIR}
 
-COPY "/.vscode" "${AMENT_WORKSPACE_DIR}/.vscode"
-RUN sed -i -E "s/(ROS_DISTRO=\\$\{1:-\").*(\"\})/\1${ROS_DISTRO}\2/" ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash \
- && echo "alias rsource='source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash'" >> /home/${USERNAME}/.bash_aliases \
+USER ${USERNAME}
+
+
+############################
+# Visual Studio Code image #
+############################
+FROM dev as vsc
+
+COPY ".vscode" "${AMENT_WORKSPACE_DIR}/.vscode"
+RUN echo "alias rsource='source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash ${ROS_DISTRO}'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rbuild='(cd ${AMENT_WORKSPACE_DIR} && colcon build)'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rclean='(cd ${AMENT_WORKSPACE_DIR} && colcon clean workspace -y)'" >> /home/${USERNAME}/.bash_aliases \
- && echo "source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash" >> /home/${USERNAME}/.bashrc
-
-USER ${USERNAME}
+ && echo "rsource" >> /home/${USERNAME}/.bashrc
 

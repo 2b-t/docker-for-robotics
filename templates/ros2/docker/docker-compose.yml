@@ -4,7 +4,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      target: dev
+      target: vsc
       args:
         - AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
         - USERNAME=${USERNAME:-developer}
