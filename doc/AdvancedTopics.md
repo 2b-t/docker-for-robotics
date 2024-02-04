@@ -111,12 +111,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 # Set-up a new user without password inside the Docker (see also the dedicated section above)
+ARG USER_NAME="some_user"
 ARG GROUP_ID=1000
 ARG USER_ID=1000
-ARG USER_NAME=some_user
-RUN addgroup --gid ${GROUP_ID} ${USER_NAME}
-RUN adduser --disabled-password --gecos '' --uid ${USER_ID} --gid ${GROUP_ID} ${USER_NAME}
-USER ${USER_NAME}
+RUN addgroup --gid ${GID} ${USERNAME} \
+ && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
+ && chown -R ${UID}:${GID} /home/${USERNAME}
+USER ${USERNAME}
 
 # Entrypoint script sources our workspace and launch the main launch file
 ENTRYPOINT["entrypoint.sh"]
