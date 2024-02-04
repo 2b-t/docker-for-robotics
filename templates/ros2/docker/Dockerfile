@@ -3,7 +3,7 @@
 ##############
 FROM ros:humble-ros-base as base
 
-ARG AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
+ARG AMENT_WORKSPACE_DIR="/ament_ws"
 
 LABEL org.opencontainers.image.authors="tobit.flatscher@outlook.com"
 LABEL description="ROS 2 Humble Docker template"
@@ -36,9 +36,9 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 FROM base as dev
 
-ARG USERNAME=${USERNAME}
-ARG UID=${UID}
-ARG GID=${GID}
+ARG USERNAME="developer"
+ARG UID=1000
+ARG GID=1000
 
 ENV DEBIAN_FRONTEND=noninteractive
 

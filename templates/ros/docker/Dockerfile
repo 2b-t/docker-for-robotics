@@ -3,7 +3,7 @@
 ##############
 FROM ros:noetic-robot as base
 
-ARG CATKIN_WORKSPACE_DIR=${CATKIN_WORKSPACE_DIR}
+ARG CATKIN_WORKSPACE_DIR="/catkin_ws"
 
 LABEL org.opencontainers.image.authors="tobit.flatscher@outlook.com"
 LABEL description="ROS Noetic Docker template"
@@ -31,9 +31,9 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 FROM base as dev
 
-ARG USERNAME=${USERNAME}
-ARG UID=${UID}
-ARG GID=${GID}
+ARG USERNAME="developer"
+ARG UID=1000
+ARG GID=1000
 
 ENV DEBIAN_FRONTEND=noninteractive
 
