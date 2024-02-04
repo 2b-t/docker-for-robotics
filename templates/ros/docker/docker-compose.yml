@@ -20,5 +20,5 @@ services:
     network_mode: "host"
     tty: true
     volumes:
-      - ../src:/${CATKIN_WORKSPACE_DIR}/src
+      - ../src:${CATKIN_WORKSPACE_DIR}/src
 
