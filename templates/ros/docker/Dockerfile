@@ -40,6 +40,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get install -y \
     ack \
+    cloc \
+    gdb \
     htop \
     iperf3 \
     iputils-ping \
@@ -47,6 +49,7 @@ RUN apt-get update \
     net-tools \
     psmisc \
     python3-vcstool \
+    tmux \
  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
