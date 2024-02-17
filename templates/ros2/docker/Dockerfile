@@ -44,9 +44,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get install -y \
+    ack \
+    htop \
     iperf3 \
     iputils-ping \
+    mlocate \
     net-tools \
+    psmisc \
     python3-vcstool \
  && rm -rf /var/lib/apt/lists/*
 
@@ -57,8 +61,6 @@ RUN apt-get update \
 
 # Install additional developer tools here...
 
-ENV DEBIAN_FRONTEND=dialog
-
 RUN apt-get update \
  && apt-get install -y sudo \
  && rm -rf /var/lib/apt/lists/* \
@@ -68,17 +70,12 @@ RUN apt-get update \
  && chown -R ${UID}:${GID} /home/${USERNAME} \
  && chown -R ${UID}:${GID} ${AMENT_WORKSPACE_DIR}
 
-USER ${USERNAME}
+ENV DEBIAN_FRONTEND=dialog
 
-
-############################
-# Visual Studio Code image #
-############################
-FROM dev as vsc
-
-COPY ".vscode" "${AMENT_WORKSPACE_DIR}/.vscode"
-RUN echo "alias rsource='source ${AMENT_WORKSPACE_DIR}/.vscode/ros2_source.bash ${ROS_DISTRO}'" >> /home/${USERNAME}/.bash_aliases \
+RUN echo "alias rsource='source ${AMENT_WORKSPACE_DIR}/install/setup.bash'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rbuild='(cd ${AMENT_WORKSPACE_DIR} && colcon build)'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rclean='(cd ${AMENT_WORKSPACE_DIR} && colcon clean workspace -y)'" >> /home/${USERNAME}/.bash_aliases \
- && echo "rsource" >> /home/${USERNAME}/.bashrc
+ && echo "rsource || source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
+
+USER ${USERNAME}
 

@@ -39,9 +39,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get install -y \
+    ack \
+    htop \
     iperf3 \
     iputils-ping \
+    mlocate \
     net-tools \
+    psmisc \
     python3-vcstool \
  && rm -rf /var/lib/apt/lists/*
 
@@ -52,8 +56,6 @@ RUN apt-get update \
 
 # Install additional developer tools here...
 
-ENV DEBIAN_FRONTEND=dialog
-
 RUN apt-get update \
  && apt-get install -y sudo \
  && rm -rf /var/lib/apt/lists/* \
@@ -62,18 +64,13 @@ RUN apt-get update \
  && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
  && chown -R ${UID}:${GID} /home/${USERNAME} \
  && chown -R ${UID}:${GID} ${CATKIN_WORKSPACE_DIR}
+ 
+ENV DEBIAN_FRONTEND=dialog
 
-USER ${USERNAME}
-
-
-############################
-# Visual Studio Code image #
-############################
-FROM dev as vsc
-
-COPY ".vscode" "${CATKIN_WORKSPACE_DIR}/.vscode"
-RUN echo "alias rsource='source ${CATKIN_WORKSPACE_DIR}/.vscode/ros_source.bash ${ROS_DISTRO}'" >> /home/${USERNAME}/.bash_aliases \
+RUN echo "alias rsource='source ${CATKIN_WORKSPACE_DIR}/devel/setup.bash'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rbuild='(cd ${CATKIN_WORKSPACE_DIR} && catkin build)'" >> /home/${USERNAME}/.bash_aliases \
  && echo "alias rclean='(cd ${CATKIN_WORKSPACE_DIR} && catkin clean -y)'" >> /home/${USERNAME}/.bash_aliases \
- && echo "rsource" >> /home/${USERNAME}/.bashrc
+ && echo "rsource || source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
+
+USER ${USERNAME}
 

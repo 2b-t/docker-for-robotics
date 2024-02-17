@@ -12,7 +12,8 @@
       "command": "vcs import < .repos",
       "options": {
         "cwd": "${workspaceFolder}/src"
-      }
+      },
+      "problemMatcher": []
     },
     // Install ROS dependencies
     {
@@ -22,7 +23,8 @@
       "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
       "options": {
         "cwd": "${workspaceFolder}"
-      }
+      },
+      "problemMatcher": []
     },
     // Build tasks
     {
@@ -62,7 +64,8 @@
       "group": {
         "kind": "test",
         "isDefault": true
-      }
+      },
+      "problemMatcher": []
     },
     // Clean
     {
@@ -72,7 +75,8 @@
       "command": "catkin clean --yes",
       "options": {
         "cwd": "${workspaceFolder}"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "label": "purge",
@@ -81,7 +85,8 @@
       "command": "rm -fr .catkin_tools build install log && py3clean .",
       "options": {
         "cwd": "${workspaceFolder}"
-      }
+      },
+      "problemMatcher": []
     },
     // Start ROS Master node
     {
@@ -91,7 +96,8 @@
       "command": "roscore",
       "options": {
         "cwd": "${workspaceFolder}"
-      }
+      },
+      "problemMatcher": []
     },
   ],
   "inputs": [
