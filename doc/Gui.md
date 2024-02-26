@@ -73,36 +73,25 @@ services:
 
 This section is only relevant for Nvidia graphic cards managed by the Nvidia driver or if you want to have hardware acceleration inside the Docker, e.g. for using CUDA or OpenGL. Graphic user interfaces that do not require it will work fine in any case. As also pointed out [in the ROS tutorial](http://wiki.ros.org/docker/Tutorials/Hardware%20Acceleration) having hardware acceleration is actually more tricky! Nvidia offers a dedicated [`nvidia-docker`](https://github.com/NVIDIA/nvidia-docker) (with two different options `nvidia-docker-1` and `nvidia-docker-2` which sightly differ) as well as the [`nvidia-container-runtime`](https://nvidia.github.io/nvidia-container-runtime/). Latter was chosen for this guide as it seems to be the way from now onwards and will be discussed below.
 
-#### 2.2.1 Installing the `nvidia-container-runtime`
+#### 2.2.1 Installing the `nvidia-container-toolkit`
 
-The installation process of the [`nvidia-container-runtime`](https://nvidia.github.io/nvidia-container-runtime/) is described [here](https://stackoverflow.com/a/59008360). Before following through with the installation make sure it is not already set-up on your system. For this check the `runtime` field from the output of `$ docker info`. If `nvidia` is available as an option already you should be already good to go.
+The [`nvidia-container-runtime`](https://nvidia.github.io/nvidia-container-runtime/) (see installation instructions [here](https://stackoverflow.com/a/59008360)) is now deprecated and you should install the [`nvidia-container-toolkit`](https://github.com/NVIDIA/nvidia-container-toolkit) instead. Before following through with the installation make sure it is not already set-up on your system. For this check the `runtime` field from the output of `$ docker info`. If `nvidia` is available as an option already you should be already good to go.
 
-If it is not available you should be able to install it with the following steps:
+If it is not available you should be able to install it with the [following steps](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html):
 
 ```bash
-$ curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
-  sudo apt-key add -
-$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-$ curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | \
-  sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+$ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 $ sudo apt-get update
-$ sudo apt-get install nvidia-container-runtime
+$ sudo apt-get install -y nvidia-container-toolkit
 ```
 
-and then [set-up the Docker runtime](https://github.com/NVIDIA/nvidia-container-runtime#docker-engine-setup):
+and then [set-up the Docker runtime](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#configuration):
 
 ```bash
-$ sudo tee /etc/docker/daemon.json <<EOF
-{
-    "runtimes": {
-        "nvidia": {
-            "path": "/usr/bin/nvidia-container-runtime",
-            "runtimeArgs": []
-        }
-    }
-}
-EOF
-$ sudo pkill -SIGHUP dockerd
+$ sudo nvidia-ctk runtime configure --runtime=docker
 ```
 
 After these steps you might will have to restart the system or at least the Docker daemon with `$ sudo systemctl daemon-reload` and `$ sudo systemctl restart docker`. Then `$ docker info` should output at least two different runtimes, the default `runc` as well as `nvidia`. This runtime can be set in the Docker-Compose file and one might have to set the `environment variables` `NVIDIA_VISIBLE_DEVICES=all` and `NVIDIA_DRIVER_CAPABILITIES=all`. Be aware that this will fail when launching it on other system without that runtime. You will need another dedicated Docker-Compose file for non-nVidia graphic cards!
