@@ -31,6 +31,7 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 FROM base as dev
 
+ARG CATKIN_WORKSPACE_DIR="/catkin_ws"
 ARG USERNAME="developer"
 ARG UID=1000
 ARG GID=1000

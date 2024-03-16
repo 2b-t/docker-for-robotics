@@ -36,6 +36,7 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 FROM base as dev
 
+ARG AMENT_WORKSPACE_DIR="/ament_ws"
 ARG USERNAME="developer"
 ARG UID=1000
 ARG GID=1000
