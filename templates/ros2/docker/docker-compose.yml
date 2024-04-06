@@ -8,8 +8,8 @@ services:
       args:
         - AMENT_WORKSPACE_DIR=${AMENT_WORKSPACE_DIR}
         - USERNAME=${USERNAME:-developer}
-        - UID=${UID:-1000}
-        - GID=${UID:-1000}
+        - UID=${UID}
+        - GID=${GID}
     container_name: ros2_docker
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}

@@ -8,8 +8,8 @@ services:
       args:
         - CATKIN_WORKSPACE_DIR=${CATKIN_WORKSPACE_DIR}
         - USERNAME=${USERNAME:-developer}
-        - UID=${UID:-1000}
-        - GID=${UID:-1000}
+        - UID=${UID}
+        - GID=${GID}
     container_name: ros_docker
     environment:
       - ROS_MASTER_URI=http://${ROBOT_IP}:11311
