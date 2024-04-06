@@ -26,7 +26,7 @@ A few problems emerge with user rights and shared volumes when working from a Do
 
 I personally use Dockers in particular for developing and I am not too bothered about being super-user inside the container. If you are, and depending on your use case you should be (in particular for security reasons), then have a look at the linked posts as well as the [Visual Studio Code guide on this](https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user).
 
-What I generally do is use the **environment variables `${USER}` or `${USERNAME}` as well as `${UID}`**, if provided or else assume reasonable default values, pass them into the container as arguments
+What I generally do is use the **environment variables `${USER}` or `${USERNAME}`**, if provided or else assume reasonable default values, pass them into the container as arguments. Most users will have a user id and a group id corresponding to `1000` as these values are given to the first user account.
 
 ```yaml
 version: "3.9"
@@ -37,8 +37,8 @@ services:
       dockerfile: docker/Dockerfile
       args:
         - USERNAME=${USERNAME:-developer}
-        - UID=${UID:-1000}
-        - GID=${UID:-1000}
+        - UID=1000
+        - GID=1000
 ```
 
 and then create a corresponding user inside the Docker
@@ -52,10 +52,13 @@ RUN addgroup --gid ${GID} ${USERNAME} \
  && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
  && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
  && chown -R ${UID}:${GID} /home/${USERNAME}
+
 USER ${USERNAME}
 ```
 
 This results in the same user being used inside the Docker than on a Linux-based host system.
+
+You can also put the values for `UID` and `GID` into the environment file so that the user can modify them easily.
 
 ## 5. Multi-stage builds
 
@@ -106,17 +109,24 @@ FROM some_user/some_repo:devel
 # We will install now packages as Debians instead of mounting the source code
 RUN echo "deb http://packages.awesome-robot.org/robot/ubuntu focal main" > /etc/apt/sources.list.d/awesome-latest.list
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 00000000000000000000000000000000
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
     some-awesome-robot-full=1.0.0 \
  && rm -rf /var/lib/apt/lists/*
 
 # Set-up a new user without password inside the Docker (see also the dedicated section above)
-ARG USER_NAME="some_user"
-ARG GROUP_ID=1000
-ARG USER_ID=1000
+ARG USERNAME=some_user
+ARG UID=1000
+ARG GID=1000
+
+RUN apt-get update \
+ && apt-get install -y \
+    sudo \
+ && rm -rf /var/lib/apt/lists/*
 RUN addgroup --gid ${GID} ${USERNAME} \
  && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
  && chown -R ${UID}:${GID} /home/${USERNAME}
+
 USER ${USERNAME}
 
 # Entrypoint script sources our workspace and launch the main launch file
