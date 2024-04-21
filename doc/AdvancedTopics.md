@@ -1,6 +1,6 @@
 # Advanced topics
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
+Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2024)
 
 
 
@@ -20,7 +20,11 @@ As pointed out earlier Docker was never intended for graphic user interfaces and
 
 Working with the Robot Operating System (ROS) or its successor ROS 2 might pose particular challenges, such as working with hardware and network discovery of other nodes. I have written down some notes of how I generally structure my Dockers in [`Ros.md`](./Ros.md). In particular this is concerned with working with hardware, multiple machines and time synchronization between them.
 
-## 4. Users and safety
+## 4. Docker on Windows
+
+Docker as a technology builds on the Linux operating system but can be run on other operating systems as well with a lightweight virtual machine in between. An interesting option is running it on Windows with WSL 2 which allows you also to visualize graphic user interfaces. This is discussed in more detail in [`Windows.md`](./Windows.md).
+
+## 5. Users and safety
 
 A few problems emerge with user rights and shared volumes when working from a Docker as discussed [in this Stackoverflow post](https://stackoverflow.com/questions/68155641/should-i-run-things-inside-a-docker-container-as-non-root-for-safety) and in more detail [in this blog post](https://jtreminio.com/blog/running-docker-containers-as-current-host-user/). In particular it might be that the container might not be able to write to the shared volume or vice versa the host user can only delete folders created by the Docker user when being a super-user. As outlined in the latter, there are ways to work around this, passing the current user id and group as input arguments to the container. In analogy with Docker-Compose one might default to the root user or change to the current user if [arguments are supplied](https://stackoverflow.com/questions/34322631/how-to-pass-arguments-within-docker-compose).
 
@@ -60,7 +64,7 @@ This results in the same user being used inside the Docker than on a Linux-based
 
 You can also put the values for `UID` and `GID` into the environment file so that the user can modify them easily.
 
-## 5. Multi-stage builds
+## 6. Multi-stage builds
 
 Another interesting topic for **slimming down the resulting containers** as mentioned before are [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) where only the files necessary for running are kept and every unnecessary ballast is removed. It is one of those things that you might have a look at when trying to mastering [Docker best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
 
@@ -94,11 +98,11 @@ services:
       target: dev
 ```
 
-## 6. Real-time code
+## 7. Real-time code
 
 As mentioned another point that is often not discussed is what steps are necessary for running real-time code from inside a Docker. As outlined in [this IBM research report](https://domino.research.ibm.com/library/cyberdig.nsf/papers/0929052195DD819C85257D2300681E7B/$File/rc25482.pdf), the impact of Docker on the performance can be very low if launched with the correct options. After all you are using the kernel of the host system and the same scheduler. I have discussed this also in more detail in a [dedicated repository](https://github.com/2b-t/docker-realtime), in particular focussing on `PREEMPT_RT` which is likely the most relevant for robotics.
 
-## 7. Deployment
+## 8. Deployment
 
 One might develop inside a container by mounting all necessary directories into the container. For simplicity one might be `root` inside the container. When deploying a container commonly a dedicated release image named e.g. `Dockerfile.release` will be created. This container might use the development image and instead of mounting the corresponding source code into the container the **required dependencies will be installed from Debian packages**. Ideally we have a CI-pipeline that produces these Debian packages (e.g. a Github Action in each repository such as [this](https://github.com/arkane-systems/apt-repo-update)) and another CI-pipeline that pushes the development image to our Docker registry (e.g. for Github Actions see [here](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)). Both of these can then trigger the generation of the release Dockerfile located in a different repository (e.g. for Github Actions see [here](https://github.com/marketplace/actions/trigger-external-workflow)). Additionally we will use another non-root user inside the Docker.
 

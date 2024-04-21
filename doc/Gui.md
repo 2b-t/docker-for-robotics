@@ -6,12 +6,12 @@ Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
 
 ## 1. Different approaches 
 
-Running user interfaces from inside a Docker might not be its intended usage but as of now there are several options available. The problem with all of them is that most of them are specific to Linux operating systems. On the the [ROS Wiki](http://wiki.ros.org/docker/Tutorials/GUI) the different options are discussed in more detail:
+Running user interfaces from inside a Docker might not be its intended usage but as of now there are several options available. The problem with all of them is that most of them are specific to **Linux** operating systems (but can also be used in Windows under the **Windows Subsystem for Linux** (WSL 2). On the the [ROS Wiki](http://wiki.ros.org/docker/Tutorials/GUI) the different options are discussed in more detail:
 
 - In Linux there are several ways of connecting a containers output to a host's **X server** resulting in an output which is indistinguishable from a program running on the host directly. This is the approach chosen for this guide. It is quite portable but requires additional steps for graphics cards running with nVidia hardware acceleration rather than the Linux Nouveau display driver. OSRF has also released [Rocker](https://github.com/osrf/rocker) as a tool to support mounting folders and launching graphic user interfaces. I did not use it as I try to avoid introducing unnecessary dependencies.
 - Other common approaches are less elegant and often use some sort of **Virtual Network Computing (VNC)** which streams the entire desktop to the host over a dedicated window similar to connecting virtually to a remote machine. This is usually the approach chosen for other operating systems such as Windows and Macintosh but requires additional software and does not integrate as seemlessly.
 
-The rest of the guide will focus on graphic user interfaces on Linux by exploiting X-Server. This won't work with Windows and Mac but I would not encourage using Docker on other operating systems other than Linux anyways.
+The rest of the guide will focus on graphic user interfaces on Linux by exploiting X-Server. This won't work with native Windows (but works with WSL 2 under Windows as discussed in [`Windows.md`](./Windows.md)) and Mac but I would not encourage using Docker on other operating systems other than Linux anyways.
 
 
 
