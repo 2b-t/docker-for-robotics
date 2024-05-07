@@ -2,7 +2,7 @@
 
 Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2024)
 
-[![ROS Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml/badge.svg)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros.yml) [![ROS 2 Docker](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml/badge.svg?branch=main)](https://github.com/2b-t/docker-for-ros/actions/workflows/build-ros2.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![ROS Docker](https://github.com/2b-t/docker-for-robotics/actions/workflows/build-ros.yml/badge.svg)](https://github.com/2b-t/docker-for-robotics/actions/workflows/build-ros.yml) [![ROS 2 Docker](https://github.com/2b-t/docker-for-robotics/actions/workflows/build-ros2.yml/badge.svg?branch=main)](https://github.com/2b-t/docker-for-robotics/actions/workflows/build-ros2.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
@@ -39,5 +39,5 @@ The folder [**`examples/`**](./examples) contains different ROS and ROS 2 exampl
 This workspace contains several other repositories as submodules. Therefore please clone it with the following command:
 
 ```bash
-$ git clone --recurse-submodules https://github.com/2b-t/docker-for-ros.git
+$ git clone --recurse-submodules https://github.com/2b-t/docker-for-robotics.git
 ```

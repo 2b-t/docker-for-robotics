@@ -19,7 +19,7 @@ The following example will shows how Docker can be useful for getting legacy cod
 Please make sure that you cloned this repository with the `--recurse-submodules` option as follows
 
 ```bash
-$ git clone --recurse-submodules https://github.com/2b-t/docker-for-ros
+$ git clone --recurse-submodules https://github.com/2b-t/docker-for-robotics.git
 ```
 
 else the modules from Traclabs will be empty. In case you did not you will have to run 
