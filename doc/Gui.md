@@ -47,6 +47,8 @@ Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, 
 Aborted (core dumped)
 ```
 
+In case graphic user interfaces do not open up correctly be sure to check the `DISPLAY` variable is set correctly. Output `$ echo ${DISPLAY}` on both, the host system as well as inside the container, and make sure they correspond.
+
 
 
 ### 2.1 Nouveau and AMD driver
@@ -199,6 +201,22 @@ You should be able to switch between the two with [**PRIME offloading**](https:/
 ```bash
 $ prime-run some_program
 ```
+
+
+
+#### 2.2.4 Running containers as `privileged`
+
+In some rare instances with hybrid graphics cards, **hardware acceleration might not work correctly** resulting in e.g. [Rviz outputting the following](https://github.com/moby/moby/issues/38442):
+
+```bash
+$ rviz
+dbus[97]: The last reference on a connection was dropped without closing the connection. This is a bug in an application. See dbus_connection_unref() documentation for details.
+Most likely, the application was supposed to call dbus_connection_close(), since this is a private connection.
+  D-Bus not built with -rdynamic so unable to print a backtrace
+Aborted (core dumped)
+```
+
+In this case what might help is **running the container as `privileged`**.
 
 
 
