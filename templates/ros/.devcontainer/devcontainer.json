@@ -6,6 +6,14 @@
   "service": "ros_docker",
   "workspaceFolder": "/catkin_ws",
   "shutdownAction": "stopCompose",
-  "extensions": [
-  ]
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-iot.vscode-ros",
+        "ms-python.python",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
 }
