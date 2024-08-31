@@ -6,14 +6,10 @@
   "service": "ros2_docker",
   "workspaceFolder": "/ament_ws",
   "shutdownAction": "stopCompose",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-iot.vscode-ros",
-        "ms-python.python",
-        "ms-vscode.cmake-tools",
-        "ms-vscode.cpptools"
-      ]
-    }
-  }
+  "extensions": [
+    "ms-iot.vscode-ros",
+    "ms-python.python",
+    "ms-vscode.cmake-tools",
+    "ms-vscode.cpptools"
+  ]
 }
