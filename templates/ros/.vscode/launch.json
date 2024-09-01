@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "name": "ROS: Attach",
+      "type": "ros",
+      "request": "attach"
+    },
+    {
+      "name": "ROS: Attach to Python",
+      "type": "ros",
+      "request": "attach",
+      "runtime": "Python"
+    }
+  ] 
+}

@@ -4,6 +4,9 @@ services:
     extends:
       file: docker-compose-gui.yml
       service: ros_docker
+    cap_add:
+      # Required for GDB debugging with ROS extension
+      - SYS_PTRACE
     volumes:
       - ../.vscode:${CATKIN_WORKSPACE_DIR}/.vscode
 
