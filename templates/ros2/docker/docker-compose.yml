@@ -13,6 +13,8 @@ services:
     container_name: ros2_docker
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      # Limit ROS communication to local computer only
+      #- ROS_LOCALHOST_ONLY=1
       - YOUR_IP=${YOUR_IP}
       - ROBOT_IP=${ROBOT_IP}
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
