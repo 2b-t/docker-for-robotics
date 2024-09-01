@@ -20,9 +20,16 @@ services:
     extra_hosts:
       - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
     image: ros2_template:devel
+    # Required for communicating over the network
     network_mode: "host"
+    # Required for accessing hardware
+    #privileged: true
     tty: true
     volumes:
+      # Required for accessing hardware
+      #- /dev:/dev
+      # Required for accessing storage media
+      #- /media:/media
       - ../src:${AMENT_WORKSPACE_DIR}/src
       - ../dds:${AMENT_WORKSPACE_DIR}/dds
 
