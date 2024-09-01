@@ -56,7 +56,7 @@ You will find quite a few Docker configurations for ROS online, in particular [t
 
 ### 1.4 Larger software stacks
 
-When working with larger software stacks tools like [Docker-Compose](https://docs.docker.com/compose/) and [Docker Swarm](https://docs.docker.com/engine/swarm/stack-deploy/) might be useful for **orchestration**, in particular when deploying with Docker. This is discussed in several separate repositories such as [this one](https://github.com/fujitatomoya/ros_k8s) by Tomoya Fujita, member of the Technical Steering Committee of ROS2.
+When working with larger software stacks tools like [Docker-Compose](https://docs.docker.com/compose/) and [Docker Swarm](https://docs.docker.com/engine/swarm/stack-deploy/) might be useful for **orchestration**, in particular when deploying with Docker. This is discussed in several separate repositories such as [this one](https://github.com/fujitatomoya/ros_k8s) by Tomoya Fujita, member of the Technical Steering Committee of ROS 2.
 
 ## 2. ROS
 
@@ -158,7 +158,11 @@ While for [Docker-Compose](https://docs.docker.com/compose/compose-file/compose-
 
 ## 3. ROS 2
 
-ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UDP](https://wiki.ros.org/ROS/UDPROS) communication with [DDS](https://design.ros2.org/articles/ros_on_dds.html). As a result the [`ROS_DOMAIN_ID`](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html) replaces the IP-based set-up. For a container this means one would create a `ROS_DOMAIN_ID` environment variable that again might be controlled by an [`.env` file](https://vsupalov.com/docker-arg-env-variable-guide/):
+[ROS 2](https://docs.ros.org/en/humble/index.html) was an important update to ROS that makes it much more suitable for industrial applications. It broke backwards compatability to fix some of the limitations of ROS and for this purpose followed a more thorough and structured code design that is largely documented [here](https://design.ros2.org/). One of the important changes was going away from a custom middleware for communication that is tightly integrated, such as is the case with ROS' [TCP](https://wiki.ros.org/ROS/TCPROS)/[UDP](https://wiki.ros.org/ROS/UDPROS) communication, towards an abstraction of the communication layer (see [here](https://design.ros2.org/articles/ros_middleware_interface.html)) and the introduction of [DDS](https://design.ros2.org/articles/ros_on_dds.html) as the primary communication layer in ROS 2. ROS 2 is primary intended to be used with DDS but also allows other middleware to be used, in particular [Zenoh in ROS 2 Iron](https://github.com/ros2/rmw_zenoh). Another example of such a custom middleware is `rmw_email` (see [here](https://christophebedard.com/ros-2-over-email/) and [here](https://github.com/christophebedard/rmw_email)). For wrapping a custom middleware one has to provide a wrapper for it, `rmw_*` that respects the [API](https://design.ros2.org/articles/ros_middleware_interface.html), and set the environment variable `RMW_IMPLEMENTATION` to the corresponding implementation.
+
+### 3.1 DDS middleware configuration
+
+When using DDS as the middleware in ROS 2 the [`ROS_DOMAIN_ID`](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html) replaces the IP-based set-up. For a container this means one would create a `ROS_DOMAIN_ID` environment variable that again might be controlled by an [`.env` file](https://vsupalov.com/docker-arg-env-variable-guide/):
 
 ```yaml
  9    environment:
@@ -166,6 +170,8 @@ ROS 2 replaces the traditional custom [TCP](https://wiki.ros.org/ROS/TCPROS)/[UD
 ```
 
 Choosing a safe range for the Domain ID largely depends on the operating system and is described in more details in the [corresponding article](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html). There might be [additional settings for a DDS client such as telling it which interfaces to use](https://iroboteducation.github.io/create3_docs/setup/xml-config/). For this purpose it might make sense to mount the corresponding DDS configuration file into the Docker.
+
+When working on a network with several participats that use ROS (e.g. a company or research institution), you will have to make sure that people are using different `ROS_DOMAIN_ID`s. When only using ROS 2 locally, e.g. in simulation [set the variable `ROS_LOCALHOST_ONLY=1`](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-localhost-only-variable). This restricts the network traffic to your local PC only.
 
 Another thing you might want to configure is the **DDS middleware** to be used. In ROS 2 one might choose between different (free or payment) middleware implementations such as FastDDS and CycloneDDS. This will be outlined in more detail in the next section.
 
@@ -182,7 +188,43 @@ What I generally do is define the corresponding environment variables such as [`
 
 For an example of what this configuration might look like have a look at [this folder](../templates/ros2/docker).
 
+### 3.2 Zenoh middleware configuration
+
+A new alternative to DDS-based communication in ROS 2 Iron is [Zenoh](https://zenoh.io/), implemented in [`rmw_zenoh`](https://github.com/ros2/rmw_zenoh). Similar to the `roscore` in ROS it relies on at least a single router that establishes the connection between different nodes running on different computers (it is also possible to do so without but this is not recommended). A good introduction to this can be found in this [video](https://www.youtube.com/watch?v=fS0_rbQ6KKA). I will add this configuration once `rmw_zenoh` becomes installable from Debian packages.
+
 ## 4. Bridging ROS 1 and ROS 2
 
 Setting the DDS middleware as described above is in particular important for cross-distro communication as **different ROS distros** ship with [**different default DDS implementations**](https://docs.ros.org/en/humble/Installation/DDS-Implementations.html). Neither communication between different DDS implementations nor different ROS 2 distributions is currently officially supported (for more details see [here](https://github.com/ros2/ros2_documentation/issues/3288)) but similarly to ROS 1 if the **messages have not changed** (or you compile the messages as well as the packages using them from source) and you are **using the same DDS vendor across all involved distros** generally communication between the different distros can be achieved. This can also be useful for **bridging ROS 1 to ROS 2**. The last Ubuntu version to support both ROS 1 (Noetic) and ROS 2 (Galactic) is Ubuntu 20.04. You can use the corresponding [**Galactic ROS 1 bridge Docker**](https://hub.docker.com/layers/library/ros/galactic-ros1-bridge/images/sha256-a2f06953930b0a209295138745d606b1936f0b0564106df9230e2a6612b8b9a2?context=explore). In case message definitions have changed from Galactic to the distro that you are using (the ROS 2 API is not stable yet!) you might have to compile the corresponding messages from source. The main advantage over other solutions for having the two run alongside is that unlike to other solutions ([here](https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html) or [here](https://github.com/TommyChangUMD/ros-humble-ros1-bridge-builder/tree/main)) you will have none or only very few repositories that have to be compiled from source and can't be installed from a Debian package.
+
+## 5. CUDA and ROS
+
+When running CUDA inside a container make sure you are setting `runtime: nvidia`, as well as the environment variables `NVIDIA_VISIBLE_DEVICES=all` as well as `NVIDIA_DRIVER_CAPABILITIES=all` inside your Docker Compose file.
+
+For the image to use, you might find some online, e.g. [here](https://github.com/ika-rwth-aachen/docker-ros-ml-images) or for the Nvidia Jetson edge computing platforms [here](https://hub.docker.com/r/dustynv/ros/tags) and their Dockerfiles [here](https://github.com/dusty-nv/jetson-containers/tree/master/packages/ros). If you are not able to find an image that contains what you want, it is generally easier to start from an existing [`nvidia/cuda` image on the Dockerhub](https://hub.docker.com/r/nvidia/cuda) that uses the right version of Ubuntu (e.g. 20.04 for ROS Noetic or 22.04 for ROS 2 Humble) and install ROS on top of it by [copying the instructions from the official ROS Docker images](https://github.com/osrf/docker_images/blob/master/ros/noetic/ubuntu/focal/ros-base/Dockerfile). The other way around, starting from a ROS image and installing CUDA on top of it, is generally way more tricky! For the available Nvidia CUDA images browse the tags [here](https://hub.docker.com/r/nvidia/cuda/tags). By combining the two we can generate a custom image containing ROS and Nvidia as follows:
+
+```dockerfile
+ARG UBUNTU_VERSION=20.04
+ARG NVIDIA_CUDA_VERSION=11.8.0
+
+##############
+# Base image #
+##############
+FROM nvidia/cuda:${NVIDIA_CUDA_VERSION}-devel-ubuntu${UBUNTU_VERSION} as base
+
+ARG ROS_DISTRO=noetic
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV ROS_DISTRO=${ROS_DISTRO}
+RUN apt-get update \
+&& apt-get install -y \
+   curl \
+   lsb-release \
+ && sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
+ && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+    ros-${ROS_DISTRO}-ros-base \
+ && rm -rf /var/lib/apt/lists/*
+```
 
