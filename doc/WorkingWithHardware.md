@@ -1,4 +1,4 @@
-# ROS inside Docker
+# Accessing hardware inside a container
 
 Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2023)
 
@@ -27,6 +27,14 @@ When sharing **external devices** such as USB devices one will have to **share t
 ```
 
 The association of these numbers and the devices is given in [`/proc/devices`](https://unix.stackexchange.com/questions/198950/how-to-get-a-list-of-major-number-driver-associations).
+
+You might also selectively mount only some USB devices:
+
+```yaml
+ 9    volumes:
+10      - /dev/some_device:/dev/some_device
+11      - /dev/another_device:/dev/another_device
+```
 
 In case you are not quite sure which group a device belongs to you might also run the container with extended privileges as [**`privileged`**](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities). Note that this is in **generally not recommended** as this basically removes all types of isolation and as such might pose a security risk in particular when being `root` inside the container. In some rare cases this can't be avoided though (e.g. in the case of a Realsense camera with IMU that currently needs [write access to `/sys` which is not possible in an unprivileged container](https://forums.docker.com/t/unable-to-mount-sys-inside-the-container-with-rw-access-in-unprivileged-mode/97043)).
 
@@ -136,3 +144,12 @@ crw-rw----   1 root  dialout 188,   0 Feb  4 16:00 ttyUSB0
 ```
 
 In my case major `188`, minor `0` for `ttyUSB0`, which is my device `10c4:ea60`. Then proceed to add the major number to your `docker-compose.yml` like outlined above.
+
+## 2. Storage devices
+
+For mounting storage devices such as USBs and external hard drives it is sufficient to **mount `/media` or one of its specific subfolders as a volume**:
+
+```yaml
+ 9    volumes:
+10      - /media:/media
+```
