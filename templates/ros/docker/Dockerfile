@@ -21,6 +21,13 @@ RUN apt-get update \
     python3-osrf-pycommon \
  && rm -rf /var/lib/apt/lists/*
 
+ RUN apt-get update \
+ && apt-get -y install \
+    ros-${ROS_DISTRO}-compressed-image-transport \
+    ros-${ROS_DISTRO}-compressed-depth-image-transport \
+    ros-${ROS_DISTRO}-image-transport \
+ && rm -rf /var/lib/apt/lists/*
+
 # Add additional installation instructions here...
 
 ENV DEBIAN_FRONTEND=dialog
@@ -49,12 +56,15 @@ RUN apt-get update \
     mlocate \
     net-tools \
     psmisc \
-    python3-vcstool \
     tmux \
+    xterm \
  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
  && apt-get install -y \
+    python3-vcstool \
+    ros-${ROS_DISTRO}-rqt-common-plugins \
+    ros-${ROS_DISTRO}-rqt-robot-plugins \
     ros-${ROS_DISTRO}-rviz \
  && rm -rf /var/lib/apt/lists/*
 

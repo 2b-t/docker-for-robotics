@@ -23,6 +23,11 @@ RUN apt-get update \
 
 RUN apt-get update \
  && apt-get -y install \
+    ros-${ROS_DISTRO}-compressed-image-transport \
+    ros-${ROS_DISTRO}-compressed-depth-image-transport \
+    ros-${ROS_DISTRO}-image-transport \
+    ros-${ROS_DISTRO}-point-cloud-transport \
+    ros-${ROS_DISTRO}-point-cloud-transport-plugins \
     ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
  && rm -rf /var/lib/apt/lists/*
 
@@ -54,12 +59,16 @@ RUN apt-get update \
     mlocate \
     net-tools \
     psmisc \
-    python3-vcstool \
     tmux \
+    xterm \
  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
  && apt-get install -y \
+    python3-vcstool \
+    ros-${ROS_DISTRO}-rqt-common-plugins \
+    ros-${ROS_DISTRO}-rqt-robot-steering \
+    ros-${ROS_DISTRO}-rqt-tf-tree \
     ros-${ROS_DISTRO}-rviz2 \
  && rm -rf /var/lib/apt/lists/*
 
