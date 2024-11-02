@@ -9,8 +9,11 @@
       </Peers>
     </Discovery>
     <General>
+      <!--
       <AllowMulticast>false</AllowMulticast>
       <EnableMulticastLoopback>true</EnableMulticastLoopback>
+      -->
+      <DontRoute>true</DontRoute>
       <Interfaces>
         <NetworkInterface address="${YOUR_IP}"/>
       </Interfaces>
