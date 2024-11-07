@@ -35,4 +35,6 @@ services:
       #- /media:/media
       - ../src:${AMENT_WORKSPACE_DIR}/src
       - ../dds:${AMENT_WORKSPACE_DIR}/dds
+      # Required for ROS 2 shared memory communication
+      #- /dev/shm:/dev/shm
 
