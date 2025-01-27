@@ -22,7 +22,6 @@ services:
       #- CYCLONEDDS_URI=${AMENT_WORKSPACE_DIR}/dds/cyclone.xml
     extra_hosts:
       - "${ROBOT_HOSTNAME}:${ROBOT_IP}"
-    image: ros2_template:devel
     # Required for communicating over the network
     network_mode: "host"
     # Required for accessing hardware
