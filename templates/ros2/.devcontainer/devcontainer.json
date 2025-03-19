@@ -10,6 +10,8 @@
     "vscode": {
       "extensions": [
         "ms-iot.vscode-ros",
+        "ms-python.mypy-type-checker",
+        "ms-python.pylint",
         "ms-python.python",
         "ms-vscode.cmake-tools",
         "ms-vscode.cpptools"

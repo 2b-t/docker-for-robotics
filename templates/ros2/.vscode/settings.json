@@ -1,0 +1,7 @@
+{
+    "pylint.args": [
+    ],
+    "mypy-type-checker.args": [
+        "--strict"
+    ]
+}
