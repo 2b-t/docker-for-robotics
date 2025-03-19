@@ -1,7 +1,7 @@
 ##############
 # Base image #
 ##############
-FROM ros:noetic-robot as base
+FROM ros:noetic-robot AS base
 
 ARG CATKIN_WORKSPACE_DIR="/catkin_ws"
 
@@ -36,7 +36,7 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 # Development image #
 #####################
-FROM base as dev
+FROM base AS dev
 
 ARG CATKIN_WORKSPACE_DIR="/catkin_ws"
 ARG USERNAME="developer"

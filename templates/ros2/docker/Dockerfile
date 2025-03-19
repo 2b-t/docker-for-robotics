@@ -1,7 +1,7 @@
 ##############
 # Base image #
 ##############
-FROM ros:humble-ros-base as base
+FROM ros:humble-ros-base AS base
 
 ARG AMENT_WORKSPACE_DIR="/ament_ws"
 
@@ -39,7 +39,7 @@ ENV DEBIAN_FRONTEND=dialog
 #####################
 # Development image #
 #####################
-FROM base as dev
+FROM base AS dev
 
 ARG AMENT_WORKSPACE_DIR="/ament_ws"
 ARG USERNAME="developer"
