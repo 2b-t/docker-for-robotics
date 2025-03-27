@@ -1,12 +1,12 @@
 ##############
 # Base image #
 ##############
-FROM ros:humble-ros-base AS base
+FROM ros:jazzy-ros-base AS base
 
 ARG AMENT_WORKSPACE_DIR="/ament_ws"
 
 LABEL org.opencontainers.image.authors="tobit.flatscher@outlook.com"
-LABEL description="ROS 2 Humble Docker template"
+LABEL description="ROS 2 Jazzy Docker template"
 LABEL version="1.0"
 
 WORKDIR ${AMENT_WORKSPACE_DIR}
@@ -57,8 +57,8 @@ RUN apt-get update \
     htop \
     iperf3 \
     iputils-ping \
-    mlocate \
     net-tools \
+    plocate \
     psmisc \
     tmux \
     xterm \
@@ -78,6 +78,10 @@ RUN apt-get update \
 RUN apt-get update \
  && apt-get install -y sudo \
  && rm -rf /var/lib/apt/lists/* \
+ # Remove user blocking UID 1000 on Ubuntu 24.04 and onwards:
+ # See https://bugs.launchpad.net/cloud-images/+bug/2005129 and
+ # https://github.com/devcontainers/images/issues/1056
+ && userdel -r ubuntu || true \
  && addgroup --gid ${GID} ${USERNAME} \
  && adduser --disabled-password --gecos '' --uid ${GID} --gid ${GID} ${USERNAME} \
  && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \

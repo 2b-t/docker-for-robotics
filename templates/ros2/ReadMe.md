@@ -1,12 +1,12 @@
-# ROS 2 Humble Docker Template
+# ROS 2 Jazzy Docker Template
 
-Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2024)
+Author: [Tobit Flatscher](https://github.com/2b-t) (2021 - 2025)
 
 
 
 ## 0. Overview
 
-This repository contains a Docker workspace template for [**ROS 2 Humble**](https://docs.ros.org/en/humble/index.html). The idea is that a Docker is created for each project at Ament workspace level. Dependencies that are not expected to change during the course of a project are installed from Debian packages inside the Dockerfile, while proprietary dependencies that are expected to change during a project are mounted into the container and version controlled with [**`vcstool`**](https://github.com/dirk-thomas/vcstool). Only selected folders such as `dds/` and `src/` are mounted into the container so that the workspace can be compiled on the host system as well as inside the container without them interfering.
+This repository contains a Docker workspace template for [**ROS 2 Jazzy**](https://docs.ros.org/en/jazzy/index.html). The idea is that a Docker is created for each project at Ament workspace level. Dependencies that are not expected to change during the course of a project are installed from Debian packages inside the Dockerfile, while proprietary dependencies that are expected to change during a project are mounted into the container and version controlled with [**`vcstool`**](https://github.com/dirk-thomas/vcstool). Only selected folders such as `dds/` and `src/` are mounted into the container so that the workspace can be compiled on the host system as well as inside the container without them interfering.
 
 Here is an overview of the structure of this repository:
 
